@@ -294,6 +294,56 @@
     .screen{height:380px;}
     .nav-wrap{flex-wrap:wrap;}
   }
+
+  /* ===== MOBILE CHAT FIX ===== */
+  @media (max-width:640px){
+    section{padding:44px 16px;}
+    #ai-help{padding-top:12px;}
+    h2{font-size:24px;}
+    .section-lead{margin-bottom:28px;}
+
+    .panel{padding:12px; border-radius:12px; position:relative;}
+    .panel-top{padding:2px 4px 12px; gap:8px;}
+    .panel-title{font-size:11.5px; gap:8px;}
+    .chat-lang-switch button{padding:4px 8px; font-size:10.5px;}
+    .panel-lights{gap:4px;}
+    .panel-lights i{width:6px;height:6px;}
+
+    /* চ্যাট মেসেজ এলাকা — স্ক্রিনের উচ্চতা অনুযায়ী মানানসই, নিজে থেকেই স্ক্রল হবে */
+    .screen{
+      height:min(52vh, 420px);
+      padding:12px;
+      gap:10px;
+      border-radius:6px;
+    }
+    .msg{max-width:90%; font-size:13.8px; padding:10px 12px;}
+    .msg.ai{font-size:12.6px;}
+
+    /* কুইক-ট্যাগ পাশাপাশি স্ক্রল হবে, লাইন ভেঙে জায়গা নষ্ট করবে না */
+    .quick-tags{
+      flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
+      padding-top:2px; padding-bottom:6px; margin-top:10px;
+      scrollbar-width:none;
+    }
+    .quick-tags::-webkit-scrollbar{display:none;}
+    .qtag{flex:0 0 auto; padding:7px 12px; font-size:12px;}
+
+    /* ইনপুট বক্স সবসময় দৃশ্যমান জায়গায় স্থির থাকবে, মেসেজ যতই থাকুক না কেন */
+    .input-row{
+      position:sticky; bottom:0; z-index:5;
+      margin-top:10px; padding:7px; gap:8px;
+    }
+    .input-row textarea{font-size:14px; padding:8px 10px; min-height:22px;}
+    .send-btn{padding:0 14px; font-size:13px;}
+
+    .disclaimer{font-size:11.5px; padding:0 6px;}
+  }
+
+  @media (max-width:380px){
+    .screen{height:min(48vh, 380px);}
+    .msg{font-size:13px;}
+    .qtag{font-size:11.5px; padding:6px 10px;}
+  }
 </style>
 </head>
 <body>
