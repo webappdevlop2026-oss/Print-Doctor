@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Print Doctor — Home</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --navy-deep:#0B3B8F;
@@ -29,7 +29,7 @@
   *{box-sizing:border-box; margin:0; padding:0;}
   html{-webkit-text-size-adjust:100%;}
   body{
-    font-family:'Inter',sans-serif;
+    font-family:'Inter','Noto Sans Bengali','Noto Sans Devanagari',sans-serif;
     background:var(--bg);
     color:var(--ink);
     display:flex;
@@ -522,6 +522,19 @@
   .chat-head .t{flex:1;}
   .chat-head .t .n{font-family:'Poppins',sans-serif; font-weight:700; font-size:14.5px;}
   .chat-head .t .s{font-size:10.5px; color:rgba(255,255,255,0.75);}
+  .lang-tabs{
+    display:flex; gap:6px; padding:10px 12px 0;
+    background:var(--bg);
+  }
+  .lang-tab{
+    flex:1; text-align:center;
+    font-size:12px; font-weight:600; color:var(--slate);
+    background:#fff; border:1.5px solid var(--line);
+    padding:8px 6px; border-radius:10px;
+  }
+  .lang-tab.active{
+    background:var(--navy); border-color:var(--navy); color:#fff;
+  }
   .chat-close{width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center;}
   .chat-close svg{width:15px; height:15px;}
   .chat-body{flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px;}
@@ -851,13 +864,18 @@
   <div class="chat-modal" id="chatModal">
     <div class="chat-head">
       <div class="t">
-        <div class="n">AI Problem Solver</div>
-        <div class="s">Usually replies in seconds</div>
+        <div class="n" id="chatHeadTitle">AI Problem Solver</div>
+        <div class="s" id="chatHeadSub">Usually replies in seconds</div>
       </div>
       <button class="chat-close" id="chatClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg></button>
     </div>
+    <div class="lang-tabs">
+      <button class="lang-tab" data-lang="bn">বাংলা</button>
+      <button class="lang-tab active" data-lang="en">English</button>
+      <button class="lang-tab" data-lang="hi">हिंदी</button>
+    </div>
     <div class="chat-body" id="chatBody">
-      <div class="msg bot">Hi! I'm the Print Doctor assistant. Tell me what's wrong with your printer or copier &mdash; paper jam, error code, faded prints, anything.</div>
+      <div class="msg bot" id="chatGreeting">Hi! I'm the Print Doctor assistant. Tell me what's wrong with your printer or copier &mdash; paper jam, error code, faded prints, anything.</div>
     </div>
     <div class="chat-input-row">
       <input type="text" id="chatInput" placeholder="Describe your printer problem...">
@@ -976,6 +994,9 @@
   const chatModal = $('chatModal');
   const chatBody = $('chatBody');
   const chatInput = $('chatInput');
+  const chatHeadSub = $('chatHeadSub');
+  const chatGreeting = $('chatGreeting');
+  let chatLang = 'en';
 
   function openChat(){ chatModal.classList.add('open'); closeDrawer(); }
   function closeChat(){ chatModal.classList.remove('open'); }
@@ -994,23 +1015,145 @@
     chatBody.scrollTop = chatBody.scrollHeight;
   }
 
-  const botReplies = [
-    "Got it. Can you tell me the exact error code or message shown on the display?",
-    "That sounds like a paper feed issue. Try removing the tray, fanning the paper, and reloading it below the max-fill line.",
-    "For streaky or faded prints, the toner or ink cartridge may be low or unevenly seated — try reseating it first.",
-    "Thanks for the details. I'd recommend booking a technician visit if this keeps happening after a restart."
+  // ---- Language tabs ----
+  const uiText = {
+    en: { sub:"Usually replies in seconds", greeting:"Hi! I'm the Print Doctor assistant. Tell me what's wrong with your printer or copier — paper jam, error code, faded prints, offline/network, toner, or power issues.", placeholder:"Describe your printer problem...", switched:"Switched to English" },
+    bn: { sub:"সাধারণত সেকেন্ডেই উত্তর দেয়", greeting:"হাই! আমি প্রিন্ট ডাক্তার অ্যাসিস্ট্যান্ট। আপনার প্রিন্টার বা কপিয়ারের সমস্যাটা বলুন — কাগজ জ্যাম, এরর কোড, ফিকে প্রিন্ট, অফলাইন/নেটওয়ার্ক, টোনার, বা পাওয়ার সমস্যা।", placeholder:"আপনার প্রিন্টার সমস্যাটা লিখুন...", switched:"বাংলায় পরিবর্তন করা হয়েছে" },
+    hi: { sub:"आमतौर पर सेकंडों में जवाब देता है", greeting:"नमस्ते! मैं प्रिंट डॉक्टर असिस्टेंट हूँ। बताइए आपके प्रिंटर या कॉपियर में क्या दिक्कत है — पेपर जाम, एरर कोड, हल्की प्रिंट, ऑफलाइन/नेटवर्क, टोनर, या पावर की समस्या।", placeholder:"अपनी प्रिंटर समस्या लिखें...", switched:"हिंदी में बदल दिया गया" }
+  };
+
+  function applyLang(lang){
+    chatLang = lang;
+    document.querySelectorAll('.lang-tab').forEach(t=> t.classList.toggle('active', t.dataset.lang === lang));
+    chatHeadSub.textContent = uiText[lang].sub;
+    chatInput.placeholder = uiText[lang].placeholder;
+    // update the greeting bubble only if it's still the sole message
+    if(chatBody.children.length === 1){
+      chatGreeting.textContent = uiText[lang].greeting;
+    } else {
+      showToast(uiText[lang].switched);
+    }
+  }
+  document.querySelectorAll('.lang-tab').forEach(tab=>{
+    tab.addEventListener('click', ()=> applyLang(tab.dataset.lang));
+  });
+
+  // ---- Keyword-based diagnosis engine (EN / BN / HI) ----
+  const issues = [
+    {
+      key:'paper_jam',
+      patterns:[/jam|stuck|feed(ing)? issue/i, /জ্যাম|আটকে|আটকা/, /जाम|फंस/],
+      reply:{
+        en:"That's a paper jam. Turn off the printer, gently pull out the jammed sheet in the direction of the paper path (never backward), check both the tray and rear door, then fan the paper stack before reloading it below the max-fill line.",
+        bn:"এটা কাগজ জ্যামের সমস্যা। প্রিন্টার বন্ধ করুন, আটকে থাকা কাগজটা কাগজ চলাচলের দিক অনুযায়ী আস্তে টেনে বের করুন (উল্টো দিকে টানবেন না), ট্রে ও পেছনের দরজা দুটোই চেক করুন, তারপর কাগজের স্তূপ একটু ফ্যান করে ম্যাক্স-ফিল লাইনের নিচে আবার লোড করুন।",
+        hi:"यह पेपर जाम की समस्या है। प्रिंटर बंद करें, फंसे हुए कागज़ को पेपर पाथ की दिशा में धीरे से बाहर खींचें (उल्टी दिशा में न खींचें), ट्रे और पिछला दरवाज़ा दोनों जांचें, फिर कागज़ के बंडल को फैनकर मैक्स-फिल लाइन से नीचे दोबारा लोड करें।"
+      }
+    },
+    {
+      key:'error_code',
+      patterns:[/error code|error\b|\be-?\d{1,3}\b/i, /এরর কোড|এরর|কোড/, /एरर कोड|एरर|कोड/],
+      reply:{
+        en:"Can you share the exact error code or message on the display? Most numeric error codes point to a specific part (fuser, drum, or sensor) — once I know the code I can give you the exact fix.",
+        bn:"ডিসপ্লেতে ঠিক কী এরর কোড বা মেসেজ দেখাচ্ছে বলতে পারবেন? বেশিরভাগ নাম্বার-ভিত্তিক এরর কোড নির্দিষ্ট একটা পার্টের (ফিউজার, ড্রাম, বা সেন্সর) দিকে ইঙ্গিত করে — কোডটা জানলে সঠিক সমাধান বলে দিতে পারব।",
+        hi:"डिस्प्ले पर सही एरर कोड या मैसेज क्या दिख रहा है, बता सकते हैं? ज़्यादातर नंबर वाले एरर कोड किसी खास पार्ट (फ्यूज़र, ड्रम, या सेंसर) की तरफ इशारा करते हैं — कोड पता चलते ही सही समाधान बता सकता हूँ।"
+      }
+    },
+    {
+      key:'faded_print',
+      patterns:[/faded|streak|light print|blurry|smudge|patchy/i, /ফিকে|দাগ|ঝাপসা|হালকা প্রিন্ট/, /हल्का|धारी|धुंधला|फीका/],
+      reply:{
+        en:"Faded or streaky prints usually mean the toner/ink cartridge is low or unevenly seated. Take it out, gently rock it side to side to redistribute the toner, and reseat it firmly. If streaks continue, the drum unit may need cleaning or replacing.",
+        bn:"প্রিন্ট ফিকে বা দাগ কাটা হলে সাধারণত টোনার/কালি কার্তুজ কমে গেছে বা ঠিকমতো বসেনি। কার্তুজটা খুলে হালকা করে দুই দিকে নাড়িয়ে টোনার সমানভাবে ছড়িয়ে দিন, তারপর শক্ত করে আবার বসান। দাগ থেকেই গেলে ড্রাম ইউনিট পরিষ্কার বা পরিবর্তনের দরকার হতে পারে।",
+        hi:"प्रिंट फीका या धारीदार आना आमतौर पर टोनर/स्याही कार्ट्रिज कम होने या ठीक से न बैठने की वजह से होता है। कार्ट्रिज निकालें, हल्के से इसे दोनों तरफ हिलाकर टोनर बराबर फैलाएं, फिर मज़बूती से वापस लगाएं। अगर धारियां फिर भी आएं तो ड्रम यूनिट साफ करने या बदलने की ज़रूरत हो सकती है।"
+      }
+    },
+    {
+      key:'offline_network',
+      patterns:[/offline|wifi|wi-fi|network|not connect|won'?t connect/i, /অফলাইন|ওয়াইফাই|নেটওয়ার্ক|কানেক্ট হচ্ছে না/, /ऑफलाइन|वाईफाई|नेटवर्क|कनेक्ट नहीं/],
+      reply:{
+        en:"For an offline/network printer: restart both the printer and your router, make sure the printer and your device are on the same Wi-Fi network, and remove/re-add the printer from your computer or phone's printer list.",
+        bn:"প্রিন্টার অফলাইন বা নেটওয়ার্কে না থাকলে: প্রিন্টার আর রাউটার দুটোই রিস্টার্ট করুন, প্রিন্টার আর আপনার ডিভাইস একই ওয়াইফাই নেটওয়ার্কে আছে কিনা দেখুন, আর কম্পিউটার/ফোনের প্রিন্টার লিস্ট থেকে প্রিন্টারটা রিমুভ করে আবার যোগ করুন।",
+        hi:"अगर प्रिंटर ऑफलाइन या नेटवर्क से नहीं जुड़ रहा: प्रिंटर और राउटर दोनों को रीस्टार्ट करें, देखें कि प्रिंटर और आपका डिवाइस एक ही वाई-फाई नेटवर्क पर हैं, और कंप्यूटर/फोन की प्रिंटर लिस्ट से प्रिंटर हटाकर दोबारा जोड़ें।"
+      }
+    },
+    {
+      key:'toner_low',
+      patterns:[/toner|ink low|cartridge|out of ink/i, /টোনার|কালি শেষ|কার্তুজ/, /टोनर|स्याही खत्म|कार्ट्रिज/],
+      reply:{
+        en:"If it's a toner/ink warning: check the cartridge level from the printer's screen or software, and try reseating the cartridge — a loose connection can trigger a false 'low' warning even when there's toner left.",
+        bn:"টোনার/কালি লো দেখালে: প্রিন্টারের স্ক্রিন বা সফটওয়্যার থেকে কার্তুজের লেভেল চেক করুন, আর কার্তুজটা আবার ঠিকমতো বসান — লুজ কানেকশনের কারণে টোনার থাকলেও অনেক সময় ভুল 'লো' ওয়ার্নিং দেখায়।",
+        hi:"अगर टोनर/स्याही की चेतावनी आ रही है: प्रिंटर की स्क्रीन या सॉफ्टवेयर से कार्ट्रिज का लेवल चेक करें, और कार्ट्रिज को दोबारा ठीक से लगाएं — ढीले कनेक्शन की वजह से टोनर बचा होने पर भी कभी-कभी गलत 'लो' चेतावनी आ जाती है।"
+      }
+    },
+    {
+      key:'no_power',
+      patterns:[/not turn(ing)? on|won'?t turn on|no power|dead\b/i, /চালু হচ্ছে না|পাওয়ার নেই|বন্ধ হয়ে আছে/, /चालू नहीं|पावर नहीं|बंद पड़ा/],
+      reply:{
+        en:"If the printer won't power on: check the wall outlet with another device, make sure the power cable is firmly plugged in at both ends, and try a different outlet. If it still won't turn on, the power supply unit may need a technician's look.",
+        bn:"প্রিন্টার চালু না হলে: অন্য কোনো ডিভাইস দিয়ে ওয়াল আউটলেট চেক করুন, পাওয়ার কেবল দুই প্রান্তেই ভালোভাবে লাগানো আছে কিনা দেখুন, আর অন্য একটা আউটলেটে চেষ্টা করুন। তারপরও চালু না হলে পাওয়ার সাপ্লাই ইউনিট টেকনিশিয়ানকে দেখাতে হতে পারে।",
+        hi:"अगर प्रिंटर चालू नहीं हो रहा: किसी दूसरे डिवाइस से वॉल आउटलेट चेक करें, पावर केबल दोनों सिरों पर ठीक से लगी है या नहीं देखें, और किसी दूसरे आउटलेट में लगाकर देखें। फिर भी चालू न हो तो पावर सप्लाई यूनिट को टेक्नीशियन से चेक कराना पड़ सकता है।"
+      }
+    },
+    {
+      key:'slow_print',
+      patterns:[/slow|taking (too )?long/i, /ধীরে|স্লো|দেরি/, /धीमा|स्लो|देर/],
+      reply:{
+        en:"Slow printing is often caused by a large print queue, high-resolution/photo mode, or a weak Wi-Fi signal. Try clearing the print queue, switching to draft mode, or connecting via USB to compare speed.",
+        bn:"প্রিন্ট স্লো হওয়ার কারণ সাধারণত বড় প্রিন্ট কিউ, হাই-রেজোলিউশন/ফটো মোড, বা দুর্বল ওয়াইফাই সিগন্যাল। প্রিন্ট কিউ ক্লিয়ার করে দেখুন, ড্রাফট মোডে বদলান, অথবা USB দিয়ে কানেক্ট করে স্পিড তুলনা করুন।",
+        hi:"धीमी प्रिंटिंग का कारण अक्सर बड़ी प्रिंट क्यू, हाई-रेज़ोल्यूशन/फोटो मोड, या कमज़ोर वाई-फाई सिग्नल होता है। प्रिंट क्यू क्लियर करें, ड्राफ्ट मोड में बदलें, या USB से जोड़कर स्पीड की तुलना करें।"
+      }
+    },
+    {
+      key:'scanner',
+      patterns:[/scan(ner)?/i, /স্ক্যান|স্ক্যানার/, /स्कैन|स्कैनर/],
+      reply:{
+        en:"For scanner issues: make sure the scanner glass and document feeder are clean and dry, check that the scan software recognizes the device, and restart the printer if the scan option is greyed out.",
+        bn:"স্ক্যানার সমস্যার জন্য: স্ক্যানার গ্লাস আর ডকুমেন্ট ফিডার পরিষ্কার ও শুকনো আছে কিনা দেখুন, স্ক্যান সফটওয়্যার ডিভাইসটা চিনছে কিনা চেক করুন, আর স্ক্যান অপশন গ্রে হয়ে থাকলে প্রিন্টার রিস্টার্ট করুন।",
+        hi:"स्कैनर की समस्या के लिए: स्कैनर ग्लास और डॉक्यूमेंट फीडर साफ और सूखे हैं या नहीं देखें, स्कैन सॉफ्टवेयर डिवाइस को पहचान रहा है या नहीं चेक करें, और स्कैन ऑप्शन ग्रे दिखे तो प्रिंटर रीस्टार्ट करें।"
+      }
+    },
+    {
+      key:'greeting',
+      patterns:[/^\s*(hi|hello|hey)\s*!?\s*$/i, /^\s*(হাই|হ্যালো|নমস্কার)\s*!?\s*$/, /^\s*(नमस्ते|हाय|हैलो)\s*!?\s*$/],
+      reply:{
+        en:"Hello! Tell me what's happening with your printer or copier and I'll help you troubleshoot it.",
+        bn:"হ্যালো! আপনার প্রিন্টার বা কপিয়ারে কী সমস্যা হচ্ছে বলুন, আমি সমাধানে সাহায্য করব।",
+        hi:"नमस्ते! बताइए आपके प्रिंटर या कॉपियर में क्या समस्या हो रही है, मैं समाधान में मदद करूंगा।"
+      }
+    },
+    {
+      key:'thanks',
+      patterns:[/thank/i, /ধন্যবাদ/, /धन्यवाद|शुक्रिया/],
+      reply:{
+        en:"You're welcome! If the issue continues after trying this, you can book a technician visit from the Book Service card on the home screen.",
+        bn:"স্বাগতম! এরপরও সমস্যা থেকে গেলে হোম স্ক্রিনের Book Service কার্ড থেকে একজন টেকনিশিয়ান বুক করতে পারেন।",
+        hi:"आपका स्वागत है! इसके बाद भी समस्या बनी रहे तो होम स्क्रीन के Book Service कार्ड से टेक्नीशियन बुक कर सकते हैं।"
+      }
+    }
   ];
-  let replyIdx = 0;
+
+  const fallback = {
+    en:"Thanks for sharing that. Could you tell me a bit more — is there an error code on the screen, is paper jamming, or is the print quality affected?",
+    bn:"বলার জন্য ধন্যবাদ। আর একটু বিস্তারিত বলতে পারবেন — স্ক্রিনে কোনো এরর কোড আসছে, কাগজ জ্যাম হচ্ছে, নাকি প্রিন্ট কোয়ালিটি খারাপ হচ্ছে?",
+    hi:"बताने के लिए धन्यवाद। थोड़ा और बताएं — क्या स्क्रीन पर कोई एरर कोड आ रहा है, कागज़ जाम हो रहा है, या प्रिंट क्वालिटी खराब हो रही है?"
+  };
+
+  function findReply(text){
+    for(const issue of issues){
+      if(issue.patterns.some(rx => rx.test(text))){
+        return issue.reply[chatLang];
+      }
+    }
+    return fallback[chatLang];
+  }
 
   function sendMessage(){
     const text = chatInput.value.trim();
     if(!text) return;
     addMsg(text, 'user');
     chatInput.value = '';
-    setTimeout(()=>{
-      addMsg(botReplies[replyIdx % botReplies.length], 'bot');
-      replyIdx++;
-    }, 550);
+    const reply = findReply(text);
+    setTimeout(()=> addMsg(reply, 'bot'), 550);
   }
   $('chatSend').addEventListener('click', sendMessage);
   chatInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') sendMessage(); });
