@@ -1085,6 +1085,12 @@ Rules you must always follow:
     hi:"क्षमा करें, अभी AI सर्विस से कनेक्ट नहीं हो पाया। कृपया अपना इंटरनेट कनेक्शन जांचें और थोड़ी देर बाद फिर कोशिश करें।"
   };
 
+  const rateLimitMsgs = {
+    en:"We're getting a lot of requests right now. Please wait about a minute and try again.",
+    bn:"এই মুহূর্তে অনেক বেশি অনুরোধ আসছে। অনুগ্রহ করে প্রায় এক মিনিট অপেক্ষা করে আবার চেষ্টা করুন।",
+    hi:"अभी बहुत सारे रिक्वेस्ट आ रहे हैं। कृपया लगभग एक मिनट रुककर फिर कोशिश करें।"
+  };
+
   const typingMsgs = { en:"Typing…", bn:"লিখছে…", hi:"लिख रहा है…" };
 
   // Full running conversation history sent to the API each time, so the
@@ -1114,12 +1120,13 @@ Rules you must always follow:
       }
 
       if(!replyText){
-        // TEMP DEBUG: append the real backend error so we can diagnose the
-        // "AI service unreachable" issue. Remove the extra line once fixed.
-        replyText = errorMsgs[chatLang];
+        if (data && data.error && data.error.type === 'rate_limit') {
+          replyText = rateLimitMsgs[chatLang];
+        } else {
+          replyText = errorMsgs[chatLang];
+        }
         if (data && data.error) {
           console.error('AI backend error:', data.error);
-          replyText += '\n\n[debug] ' + JSON.stringify(data.error).slice(0, 500);
         }
       } else {
         history.push({ role:'assistant', content:replyText });

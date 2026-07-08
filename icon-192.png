@@ -53,15 +53,17 @@ module.exports = async function handler(req, res) {
     }
 
     if (!replyText) {
-      // Capture whatever diagnostic info Gemini gave us (hard error, safety
-      // block, missing candidates, etc.) so the client can show/log the real
-      // reason instead of a generic "couldn't connect" message.
+      const apiError = data.error || null;
+      const isRateLimit =
+        response.status === 429 ||
+        (apiError && (apiError.code === 429 || apiError.status === "RESOURCE_EXHAUSTED"));
+
       const debugInfo = {
+        type: isRateLimit ? "rate_limit" : "other",
         httpStatus: response.status,
-        apiError: data.error || null,
+        apiError,
         finishReason: data.candidates && data.candidates[0] ? data.candidates[0].finishReason : null,
-        promptFeedback: data.promptFeedback || null,
-        raw: data.error ? undefined : data // include raw payload only when there's no explicit error, to keep this small
+        promptFeedback: data.promptFeedback || null
       };
       res.status(200).json({ content: [], error: debugInfo });
       return;
