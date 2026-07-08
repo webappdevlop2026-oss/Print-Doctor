@@ -1,1050 +1,641 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="pageTitle">প্রিন্ট ডাক্তার — ফটোকপি ও প্রিন্টার সমস্যার AI সমাধান</title>
-
-<!-- PWA: ইনস্টলযোগ্য অ্যাপ হিসেবে চালানোর জন্য প্রয়োজনীয় ট্যাগ -->
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#FAF7F0">
-<link rel="icon" href="/icons/icon-192.png" type="image/png">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="প্রিন্ট ডাক্তার">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Print Doctor — Home</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#FAF7F0;
-    --paper-dim:#F1ECE0;
-    --ink:#1C1B18;
-    --graphite:#524F47;
-    --line:#DCD5C4;
-    --cyan:#00AEEF;
-    --magenta:#EC1C6E;
-    --yellow:#F5B700;
-    --ok:#1E8E5A;
+    --navy-deep:#0B3B8F;
+    --navy:#1E4FCB;
+    --navy-light:#3D6BE0;
+    --ink:#0F1E3D;
+    --slate:#5B6478;
+    --slate-soft:#8891A3;
+    --bg:#F3F5FA;
+    --card:#FFFFFF;
+    --line:#E7EAF2;
+    --gold:#FFB020;
+    --blue:#2F6BFF;
+    --green:#17A673;
+    --purple:#8B5CF6;
+    --orange:#F07E1A;
+    --pink:#F0416C;
+    --teal:#12B3A8;
+    --shadow: 0 8px 24px -12px rgba(15,30,61,0.18);
   }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{-webkit-text-size-adjust:100%;}
   body{
-    margin:0;
-    background:var(--paper);
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
     color:var(--ink);
-    font-family:'Noto Sans Bengali','Noto Sans Devanagari','Noto Sans',sans-serif;
+    display:flex;
+    justify-content:center;
     -webkit-font-smoothing:antialiased;
   }
-  .mono{font-family:'JetBrains Mono',monospace;}
-  .display{font-family:'Space Grotesk','Noto Sans Bengali','Noto Sans Devanagari',sans-serif;}
+  h1,h2,h3,.heading{font-family:'Poppins',sans-serif;}
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; border:none; cursor:pointer; background:none;}
 
-  .regmark{
-    display:inline-block;
-    width:14px;height:14px;
-    border-radius:50%;
-    border:1.5px solid currentColor;
+  .app{
+    width:100%;
+    max-width:440px;
+    min-height:100vh;
+    background:var(--bg);
     position:relative;
+    padding-bottom:92px;
+    overflow-x:hidden;
+  }
+
+  /* ================= HEADER ================= */
+  .topbar{
+    background:linear-gradient(135deg, var(--navy-deep), var(--navy) 60%, var(--navy-light));
+    padding:18px 18px 8px;
+    color:#fff;
+    position:relative;
+  }
+  .topbar-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .icon-btn{
+    width:38px; height:38px;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff;
+    flex-shrink:0;
+    border-radius:10px;
+  }
+  .icon-btn svg{width:21px; height:21px;}
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex:1;
+    min-width:0;
+  }
+  .brand-mark{
+    width:38px; height:38px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.14);
+    display:flex; align-items:center; justify-content:center;
     flex-shrink:0;
   }
-  .regmark::before,.regmark::after{content:''; position:absolute; background:currentColor;}
-  .regmark::before{ left:50%; top:-4px; bottom:-4px; width:1.5px; transform:translateX(-50%);}
-  .regmark::after{ top:50%; left:-4px; right:-4px; height:1.5px; transform:translateY(-50%);}
+  .brand-mark svg{width:21px; height:21px;}
+  .brand-text{min-width:0;}
+  .brand-text .name{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size:19px;
+    letter-spacing:0.2px;
+    line-height:1.15;
+  }
+  .brand-text .tag{
+    font-size:10.5px;
+    color:rgba(255,255,255,0.72);
+    font-weight:500;
+    letter-spacing:0.2px;
+    margin-top:1px;
+  }
+  .right-icons{display:flex; align-items:center; gap:2px;}
+  .bell-wrap{position:relative;}
+  .badge{
+    position:absolute;
+    top:2px; right:2px;
+    background:var(--pink);
+    color:#fff;
+    font-size:9.5px;
+    font-weight:700;
+    min-width:16px; height:16px;
+    border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    border:1.5px solid var(--navy-deep);
+    padding:0 3px;
+  }
+  .avatar{
+    width:32px; height:32px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.18);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .avatar svg{width:17px; height:17px;}
 
-  /* ===== NAV ===== */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(250,247,240,0.92);
-    backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--line);
+  /* ================= HERO / BANNER ================= */
+  .hero-wrap{
+    padding:14px 14px 22px;
+    background:linear-gradient(135deg, var(--navy-deep), var(--navy) 55%, var(--navy-light));
   }
-  .nav-wrap{
-    max-width:1160px; margin:0 auto;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:16px 24px; gap:16px;
+  .hero-card{
+    background:linear-gradient(120deg,#EAF0FF 0%, #F6F8FF 55%, #E3ECFF 100%);
+    border-radius:20px;
+    padding:20px 16px 16px;
+    position:relative;
+    overflow:hidden;
+    min-height:250px;
   }
-  .brand{
-    display:flex; align-items:center; gap:10px;
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700; font-size:19px; letter-spacing:-0.01em;
-    text-decoration:none; color:var(--ink); white-space:nowrap;
+  .hero-nav-btn{
+    position:absolute;
+    top:50%; transform:translateY(-50%);
+    width:32px; height:32px;
+    border-radius:50%;
+    background:rgba(15,30,61,0.55);
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    z-index:5;
   }
-  .brand .regmark{color:var(--magenta);}
-  .nav-links{display:flex; gap:24px; align-items:center;}
-  .nav-links a{color:var(--graphite); text-decoration:none; font-size:14px; font-weight:500; white-space:nowrap;}
-  .nav-links a:hover{color:var(--ink);}
-  .nav-right{display:flex; align-items:center; gap:14px;}
+  .hero-nav-btn.prev{left:8px;}
+  .hero-nav-btn.next{right:8px;}
+  .hero-nav-btn svg{width:16px; height:16px;}
 
-  /* language switcher */
-  .lang-switch{
-    display:flex; background:var(--paper-dim); border:1px solid var(--line);
-    border-radius:100px; padding:3px; gap:2px;
+  .badge-pill{
+    display:inline-block;
+    background:var(--navy);
+    color:#fff;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:0.6px;
+    padding:5px 11px;
+    border-radius:20px;
+    margin-bottom:10px;
   }
-  .lang-btn{
-    border:none; background:transparent; padding:6px 12px; border-radius:100px;
-    font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:600;
-    color:var(--graphite); cursor:pointer; transition:background .15s ease, color .15s ease;
+  .hero-title{
+    font-weight:800;
+    font-size:22px;
+    line-height:1.18;
+    color:var(--ink);
+    max-width:64%;
   }
-  .lang-btn.active{background:var(--ink); color:var(--paper);}
-  .lang-btn:hover:not(.active){color:var(--ink);}
+  .hero-sub{
+    font-weight:600;
+    font-size:12.5px;
+    color:var(--ink);
+    margin-top:8px;
+    max-width:60%;
+  }
+  .hero-desc{
+    font-size:11.5px;
+    color:var(--slate);
+    margin-top:4px;
+    max-width:58%;
+    line-height:1.4;
+  }
+  .hero-cta{
+    margin-top:14px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--navy);
+    color:#fff;
+    font-weight:600;
+    font-size:12.5px;
+    padding:10px 8px 10px 16px;
+    border-radius:24px;
+  }
+  .hero-cta .go{
+    width:22px; height:22px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.22);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero-cta svg{width:12px; height:12px;}
 
-  .nav-cta{
-    background:var(--ink); color:var(--paper);
-    padding:9px 16px; border-radius:3px; font-size:13.5px; font-weight:600; white-space:nowrap;
-  }
-  .nav-cta:hover{background:var(--magenta); color:#fff;}
-
-  /* ===== HERO ===== */
-  .hero{
-    max-width:1160px; margin:0 auto;
-    padding:72px 24px 60px;
-    display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center;
-  }
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:500;
-    color:var(--graphite); background:var(--paper-dim);
-    border:1px solid var(--line); padding:6px 12px; border-radius:100px;
-    margin-bottom:22px;
-  }
-  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--ok);}
-  h1{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:42px; line-height:1.18; letter-spacing:-0.015em;
-    margin:0 0 20px; font-weight:700;
-  }
-  h1 .accent{color:var(--magenta);}
-  .hero p.lead{
-    font-size:16.5px; line-height:1.75; color:var(--graphite);
-    max-width:480px; margin:0 0 30px;
-  }
-  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
-  .btn-primary{
-    background:var(--ink); color:var(--paper);
-    padding:14px 24px; border-radius:3px; font-weight:700; font-size:14.5px;
-    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
-    border:none; cursor:pointer; transition:transform .15s ease, background .15s ease;
-  }
-  .btn-primary:hover{background:var(--magenta); transform:translateY(-1px);}
-  .btn-ghost{
-    background:transparent; color:var(--ink);
-    padding:13px 22px; border-radius:3px; font-weight:600; font-size:14.5px;
-    text-decoration:none; border:1.5px solid var(--line);
-  }
-  .btn-ghost:hover{border-color:var(--ink);}
-
-  .trust-row{display:flex; gap:22px; margin-top:34px; flex-wrap:wrap;}
-  .trust-item{display:flex; align-items:center; gap:8px; font-size:13px; color:var(--graphite);}
-  .trust-item .regmark{width:10px;height:10px; color:var(--cyan);}
-
-  .ticket{
-    background:#fff; border:1px solid var(--line); border-radius:4px;
-    box-shadow:0 18px 40px -18px rgba(28,27,24,0.28);
-    position:relative; transform:rotate(1.2deg);
-  }
-  .ticket::before{
-    content:''; position:absolute; left:0; right:0; top:52px; height:0;
-    border-top:2px dashed var(--line);
-  }
-  .ticket-head{padding:20px 22px 26px; display:flex; justify-content:space-between; align-items:flex-start;}
-  .ticket-head .tno{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--graphite);}
-  .ticket-head .stamp{
-    font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600;
-    color:var(--ok); border:1.5px solid var(--ok); padding:3px 9px; border-radius:100px;
-    transform:rotate(-6deg); white-space:nowrap;
-  }
-  .ticket-body{padding:30px 22px 24px;}
-  .ticket-row{display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px dotted var(--line); font-size:13.5px; gap:12px;}
-  .ticket-row span:first-child{color:var(--graphite); white-space:nowrap;}
-  .ticket-row span:last-child{font-weight:600; text-align:right;}
-  .ticket-cmyk{display:flex; gap:7px; padding:20px 22px 22px;}
-  .ticket-cmyk i{width:16px;height:16px;border-radius:50%; display:block;}
-
-  /* ===== SECTIONS ===== */
-  section{max-width:1160px; margin:0 auto; padding:70px 24px;}
-  .section-tag{
-    font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:500;
-    color:var(--magenta); letter-spacing:0.04em; margin-bottom:10px; display:block;
-  }
-  h2{font-family:'Space Grotesk',sans-serif; font-size:29px; margin:0 0 14px; letter-spacing:-0.01em;}
-  .section-lead{color:var(--graphite); font-size:15px; max-width:580px; line-height:1.7; margin-bottom:44px;}
-
-  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-  .step{background:var(--paper-dim); border:1px solid var(--line); border-radius:6px; padding:26px 22px;}
-  .step .num{
-    font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--graphite);
-    display:flex; align-items:center; gap:8px; margin-bottom:14px;
-  }
-  .step h3{font-family:'Space Grotesk',sans-serif; font-size:17px; margin:0 0 8px;}
-  .step p{font-size:14px; color:var(--graphite); line-height:1.65; margin:0;}
-  .step:nth-child(1) .num{color:var(--cyan);}
-  .step:nth-child(2) .num{color:var(--magenta);}
-  .step:nth-child(3) .num{color:var(--yellow);}
-
-  /* ===== AI CHAT PANEL ===== */
-  #ai-help{padding-top:20px;}
-  .panel{
-    background:#22201C; border-radius:14px; padding:22px;
-    box-shadow:0 30px 60px -30px rgba(0,0,0,0.5);
-  }
-  .panel-top{display:flex; justify-content:space-between; align-items:center; padding:2px 6px 16px; flex-wrap:wrap; gap:10px;}
-  .panel-title{
-    color:#EFE9DA; font-family:'JetBrains Mono',monospace; font-size:12.5px;
-    display:flex; align-items:center; gap:10px;
-  }
-  .led{width:8px;height:8px;border-radius:50%; background:var(--ok); box-shadow:0 0 8px var(--ok);}
-  .panel-lights{display:flex; gap:6px;}
-  .panel-lights i{width:8px;height:8px;border-radius:50%;display:block;}
-
-  /* chat-language mini switch inside panel */
-  .chat-lang-switch{display:flex; gap:2px; background:#17160F; border:1px solid #38352E; border-radius:100px; padding:3px;}
-  .chat-lang-switch button{
-    border:none; background:transparent; color:#9A9587; font-family:'JetBrains Mono',monospace;
-    font-size:11.5px; font-weight:600; padding:5px 10px; border-radius:100px; cursor:pointer;
-  }
-  .chat-lang-switch button.active{background:var(--yellow); color:#1C1B18;}
-
-  .screen{
-    background:#0F0E0C; border-radius:8px; border:1px solid #38352E;
-    padding:18px; height:420px; overflow-y:auto;
-    display:flex; flex-direction:column; gap:14px;
-  }
-  .screen::-webkit-scrollbar{width:8px;}
-  .screen::-webkit-scrollbar-thumb{background:#38352E; border-radius:4px;}
-
-  .msg{max-width:82%; font-size:14.5px; line-height:1.65; padding:12px 15px; border-radius:8px;}
-  .msg.user{align-self:flex-end; background:#2A5B8C; color:#F2F6FA; border-bottom-right-radius:2px;}
-  .msg.ai{
-    align-self:flex-start; background:#1B1A16; color:#D9F7E4; border:1px solid #2C3B31;
-    font-family:'JetBrains Mono',monospace; font-size:13.3px; border-bottom-left-radius:2px;
-    white-space:pre-wrap;
-  }
-  .msg.ai .tag{color:var(--cyan); display:block; margin-bottom:6px; font-weight:600;}
-  .msg.sys{align-self:center; color:#7A7568; font-size:12.5px; font-family:'JetBrains Mono',monospace;}
-  .typing{align-self:flex-start; display:flex; gap:5px; padding:6px 4px;}
-  .typing span{width:6px;height:6px;border-radius:50%; background:#3E7B5A; animation:blink 1.2s infinite ease-in-out;}
-  .typing span:nth-child(2){animation-delay:.2s;}
-  .typing span:nth-child(3){animation-delay:.4s;}
-  @keyframes blink{0%,80%,100%{opacity:.25;} 40%{opacity:1;}}
-
-  .input-row{
-    display:flex; gap:10px; margin-top:14px;
-    background:#17160F; padding:8px; border-radius:8px; border:1px solid #38352E;
-  }
-  .input-row textarea{
-    flex:1; resize:none; background:transparent; border:none; outline:none;
-    color:#F2EEDF; font-family:'Noto Sans Bengali','Noto Sans Devanagari',sans-serif; font-size:14.5px;
-    padding:10px 12px; min-height:26px; max-height:120px;
-  }
-  .input-row textarea::placeholder{color:#6B6858;}
-  .send-btn{
-    background:var(--yellow); color:#1C1B18; border:none; border-radius:6px;
-    padding:0 20px; font-weight:700; font-size:14px; cursor:pointer;
-    display:flex; align-items:center; gap:6px; transition:background .15s ease; white-space:nowrap;
-  }
-  .send-btn:hover{background:var(--magenta); color:#fff;}
-  .send-btn:disabled{opacity:0.5; cursor:not-allowed;}
-
-  .quick-tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;}
-  .qtag{
-    background:#1B1A16; color:#B9B49E; border:1px solid #38352E;
-    font-size:12.5px; padding:7px 13px; border-radius:100px; cursor:pointer;
-    font-family:'JetBrains Mono',monospace;
-  }
-  .qtag:hover{border-color:var(--yellow); color:var(--yellow);}
-
-  .disclaimer{text-align:center; font-size:12.5px; color:var(--graphite); margin-top:16px;}
-
-  /* ===== PROBLEM CARDS ===== */
-  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-  .problem-card{
-    background:#fff; border:1px solid var(--line); border-radius:6px; padding:22px;
-    position:relative; overflow:hidden;
-  }
-  .problem-card::before{content:''; position:absolute; left:0; top:0; bottom:0; width:4px;}
-  .problem-card.c1::before{background:var(--cyan);}
-  .problem-card.c2::before{background:var(--magenta);}
-  .problem-card.c3::before{background:var(--yellow);}
-  .problem-card h4{font-family:'Space Grotesk',sans-serif; font-size:16px; margin:0 0 8px;}
-  .problem-card p{font-size:13.8px; color:var(--graphite); line-height:1.6; margin:0 0 14px;}
-  .problem-card button{
-    background:none; border:none; color:var(--ink); font-weight:600; font-size:13.5px;
-    cursor:pointer; padding:0; text-decoration:underline; text-underline-offset:3px;
+  .hero-illustration{
+    position:absolute;
+    right:-8px; bottom:-6px;
+    width:180px;
+    opacity:0.98;
   }
 
-  /* ===== FOOTER ===== */
-  footer{border-top:1px solid var(--line); background:var(--paper-dim);}
-  .footer-wrap{
-    max-width:1160px; margin:0 auto; padding:44px 24px;
-    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+  .dots{
+    display:flex;
+    justify-content:center;
+    gap:6px;
+    margin-top:14px;
   }
-  .footer-brand{display:flex; align-items:center; gap:10px; font-family:'Space Grotesk'; font-weight:700;}
-  .footer-brand .regmark{color:var(--magenta); width:12px; height:12px;}
-  .footer-links{display:flex; gap:24px;}
-  .footer-links a{color:var(--graphite); text-decoration:none; font-size:13.5px;}
-  .footer-note{color:var(--graphite); font-size:12.5px; width:100%; padding-top:18px; border-top:1px dotted var(--line); margin-top:8px;}
+  .dot{width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.35);}
+  .dot.active{width:18px; border-radius:4px; background:#fff;}
 
-  /* ===== HAMBURGER (mobile nav trigger) ===== */
-  .hamburger{
-    display:none; align-items:center; justify-content:center;
-    width:40px; height:40px; border-radius:8px; border:1px solid var(--line);
-    background:var(--paper-dim); cursor:pointer; flex-shrink:0; padding:0;
-    -webkit-tap-highlight-color:transparent;
+  /* ================= FEATURE GRID ================= */
+  .section{padding:20px 16px 4px;}
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
   }
-  .hamburger span{
-    display:block; width:18px; height:2px; background:var(--ink); border-radius:2px;
-    position:relative; transition:transform .2s ease, opacity .2s ease, background .2s ease;
+  .feat-card{
+    background:var(--card);
+    border-radius:16px;
+    padding:16px 14px;
+    box-shadow:var(--shadow);
+    display:flex;
+    flex-direction:column;
+    gap:9px;
   }
-  .hamburger span::before,.hamburger span::after{
-    content:''; position:absolute; left:0; width:18px; height:2px; background:var(--ink); border-radius:2px;
-    transition:transform .2s ease, top .2s ease, opacity .2s ease;
+  .feat-icon{
+    width:42px; height:42px;
+    border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff;
   }
-  .hamburger span::before{top:-6px;}
-  .hamburger span::after{top:6px;}
-  header.menu-open .hamburger span{background:transparent;}
-  header.menu-open .hamburger span::before{top:0; transform:rotate(45deg);}
-  header.menu-open .hamburger span::after{top:0; transform:rotate(-45deg);}
+  .feat-icon svg{width:21px; height:21px;}
+  .feat-card h3{
+    font-size:14px;
+    font-weight:700;
+    color:var(--ink);
+    line-height:1.25;
+  }
+  .feat-card p{
+    font-size:11.5px;
+    color:var(--slate-soft);
+    line-height:1.4;
+    flex:1;
+  }
+  .feat-arrow{
+    width:26px; height:26px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff;
+    margin-top:2px;
+  }
+  .feat-arrow svg{width:13px; height:13px;}
 
-  /* ===== MOBILE APP-STYLE BOTTOM BAR ===== */
-  .mobile-cta-bar{
-    display:none;
-    position:fixed; left:0; right:0; bottom:0; z-index:60;
-    background:rgba(250,247,240,0.94); backdrop-filter:blur(10px);
+  .bg-blue{background:var(--blue);}
+  .bg-green{background:var(--green);}
+  .bg-purple{background:var(--purple);}
+  .bg-orange{background:var(--orange);}
+  .bg-pink{background:var(--pink);}
+  .bg-teal{background:var(--teal);}
+  .bg-gold{background:var(--gold);}
+  .bg-navy{background:var(--navy);}
+
+  /* ================= AI ASSISTANT BANNER ================= */
+  .ai-banner{
+    margin:22px 16px 4px;
+    background:linear-gradient(120deg, #3A2FD6, #6C3FE0 55%, #8B4CE8);
+    border-radius:20px;
+    padding:20px 16px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 14px 30px -14px rgba(76,42,214,0.55);
+  }
+  .ai-banner::before{
+    content:'';
+    position:absolute;
+    top:-30px; right:-30px;
+    width:120px; height:120px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.08);
+  }
+  .ai-bot{width:64px; height:64px; flex-shrink:0;}
+  .ai-copy{flex:1; min-width:0; position:relative; z-index:2;}
+  .ai-copy .eyebrow{
+    font-size:11px;
+    font-weight:600;
+    color:rgba(255,255,255,0.78);
+    margin-bottom:2px;
+  }
+  .ai-copy h3{
+    color:#fff;
+    font-size:16.5px;
+    font-weight:700;
+    line-height:1.25;
+  }
+  .ai-copy p{
+    color:rgba(255,255,255,0.82);
+    font-size:11.5px;
+    margin-top:5px;
+    line-height:1.4;
+  }
+  .start-chat{
+    margin-top:11px;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    background:#fff;
+    color:var(--navy);
+    font-weight:700;
+    font-size:12.5px;
+    padding:9px 15px;
+    border-radius:20px;
+  }
+  .start-chat svg{width:14px; height:14px;}
+
+  /* ================= BRANDS ================= */
+  .brands-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
+  }
+  .brands-head h2{font-size:16.5px; font-weight:700;}
+  .view-all{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--navy);
+    display:flex;
+    align-items:center;
+    gap:3px;
+  }
+  .view-all svg{width:13px; height:13px;}
+  .brands-scroll{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding-bottom:4px;
+    scrollbar-width:none;
+  }
+  .brands-scroll::-webkit-scrollbar{display:none;}
+  .brand-chip{
+    flex-shrink:0;
+    width:90px; height:56px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:13px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size:12px;
+    color:var(--ink);
+    letter-spacing:0.2px;
+  }
+
+  /* ================= BOTTOM NAV ================= */
+  .bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:440px;
+    background:#fff;
     border-top:1px solid var(--line);
-    padding:10px 16px calc(10px + env(safe-area-inset-bottom));
-    box-shadow:0 -8px 24px -12px rgba(28,27,24,0.18);
-    transform:translateY(0); transition:transform .25s ease;
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    padding:9px 4px calc(9px + env(safe-area-inset-bottom));
+    z-index:40;
   }
-  .mobile-cta-bar.hide{transform:translateY(110%);}
-  .mobile-cta-bar a{
-    display:flex; align-items:center; justify-content:center; gap:8px;
-    background:var(--ink); color:var(--paper); text-decoration:none;
-    font-weight:700; font-size:14.5px; padding:13px 16px; border-radius:8px;
-    min-height:48px;
+  .nav-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:3px;
+    color:var(--slate-soft);
+    font-size:10.5px;
+    font-weight:600;
+    width:56px;
   }
-  .mobile-cta-bar a:active{background:var(--magenta);}
-
-  @media (max-width:860px){
-    .hero{grid-template-columns:1fr; padding-top:32px; gap:36px;}
-    h1{font-size:28px;}
-    .steps, .grid-3{grid-template-columns:1fr;}
-    .nav-links{display:none;}
-    .screen{height:380px;}
-    .nav-wrap{flex-wrap:nowrap; padding:14px 16px;}
-
-    .hamburger{display:inline-flex;}
-    .nav-right{gap:10px;}
-    .nav-right .nav-cta{display:none;}
-
-    /* nav-links becomes a dropdown sheet, toggled via header.menu-open */
-    header{position:sticky;}
-    header .nav-links{
-      display:none;
-    }
-    header.menu-open .nav-links{
-      display:flex; flex-direction:column; gap:2px;
-      position:absolute; top:100%; left:0; right:0;
-      background:var(--paper); border-bottom:1px solid var(--line);
-      padding:10px 16px calc(14px + env(safe-area-inset-bottom));
-      box-shadow:0 16px 30px -18px rgba(28,27,24,0.25);
-    }
-    header.menu-open .nav-links a{
-      padding:13px 6px; font-size:15px; font-weight:600; color:var(--ink);
-      border-bottom:1px dotted var(--line);
-    }
-    header.menu-open .nav-links a:last-child{border-bottom:none;}
-
-    /* un-rotate the hero ticket card and center it on mobile */
-    .ticket{transform:none; max-width:420px; margin:0 auto;}
-
-    /* stacked, full-width, thumb-friendly CTAs */
-    .hero-ctas{flex-direction:column; gap:10px;}
-    .btn-primary, .btn-ghost{
-      width:100%; justify-content:center; min-height:50px; font-size:15px;
-    }
-
-    .trust-row{gap:14px 18px;}
-
-    /* room for the fixed bottom CTA bar */
-    body{padding-bottom:74px;}
-    .mobile-cta-bar{display:block;}
+  .nav-item svg{width:20px; height:20px;}
+  .nav-item.active{color:var(--navy);}
+  .nav-scan{
+    width:52px; height:52px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--navy), var(--navy-light));
+    display:flex; align-items:center; justify-content:center;
+    color:#fff;
+    margin-top:-30px;
+    box-shadow:0 10px 20px -6px rgba(30,79,203,0.55);
+    border:4px solid #fff;
   }
-
-  /* ===== MOBILE CHAT FIX ===== */
-  @media (max-width:640px){
-    section{padding:40px 16px;}
-    #ai-help{padding-top:8px; scroll-margin-top:64px;}
-    #how, #problems{scroll-margin-top:64px;}
-    h2{font-size:22px;}
-    .section-lead{margin-bottom:24px; font-size:14px;}
-
-    h1{font-size:25px; line-height:1.24;}
-    .hero p.lead{font-size:15px; max-width:none;}
-    .hero{padding-top:24px; padding-bottom:36px; gap:28px;}
-
-    .panel{padding:10px; border-radius:14px; position:relative;}
-    .panel-top{padding:4px 4px 12px; gap:8px;}
-    .panel-title{font-size:11.5px; gap:8px;}
-    .panel-title span:last-child{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-    .chat-lang-switch button{padding:6px 9px; font-size:10.5px;}
-    .panel-lights{gap:4px;}
-    .panel-lights i{width:6px;height:6px;}
-
-    /* চ্যাট মেসেজ এলাকা — স্ক্রিনের উচ্চতা অনুযায়ী মানানসই, নিজে থেকেই স্ক্রল হবে */
-    .screen{
-      height:min(56dvh, 460px);
-      height:min(56vh, 460px);
-      padding:14px 12px;
-      gap:12px;
-      border-radius:8px;
-    }
-    .msg{max-width:92%; font-size:14px; padding:11px 13px;}
-    .msg.ai{font-size:13px;}
-
-    /* কুইক-ট্যাগ পাশাপাশি স্ক্রল হবে, লাইন ভেঙে জায়গা নষ্ট করবে না */
-    .quick-tags{
-      flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
-      padding-top:2px; padding-bottom:6px; margin-top:10px;
-      scrollbar-width:none;
-    }
-    .quick-tags::-webkit-scrollbar{display:none;}
-    .qtag{flex:0 0 auto; padding:9px 14px; font-size:12.5px; min-height:38px; display:flex; align-items:center;}
-
-    /* ইনপুট বক্স সবসময় দৃশ্যমান জায়গায় স্থির থাকবে, মেসেজ যতই থাকুক না কেন */
-    .input-row{
-      position:sticky; bottom:0; z-index:5;
-      margin-top:10px; padding:7px; gap:8px;
-    }
-    .input-row textarea{font-size:16px; padding:10px 10px; min-height:24px;}
-    .send-btn{padding:0 16px; font-size:13.5px; min-height:44px;}
-
-    .disclaimer{font-size:11.5px; padding:0 6px;}
-
-    /* full-width, thumb-friendly problem-card buttons */
-    .problem-card{padding:20px;}
-    .problem-card button{
-      display:inline-flex; align-items:center; min-height:40px; margin-top:2px;
-    }
-
-    .footer-wrap{padding:32px 16px; text-align:center; justify-content:center;}
-    .footer-links{gap:16px; flex-wrap:wrap; justify-content:center;}
-  }
-
-  @media (max-width:380px){
-    .screen{height:min(50dvh, 400px); height:min(50vh, 400px);}
-    .msg{font-size:13px;}
-    .qtag{font-size:11.5px; padding:8px 12px;}
-    h1{font-size:22px;}
-  }
+  .nav-scan svg{width:22px; height:22px;}
 </style>
 </head>
 <body>
+<div class="app">
 
-<header>
-  <div class="nav-wrap">
-    <a href="#top" class="brand"><span class="regmark"></span> <span data-i18n="brand">প্রিন্ট ডাক্তার</span></a>
-    <nav class="nav-links">
-      <a href="#ai-help" data-i18n="nav_ai">AI সমাধান</a>
-      <a href="#how" data-i18n="nav_how">কীভাবে কাজ করে</a>
-      <a href="#problems" data-i18n="nav_problems">সাধারণ সমস্যা</a>
-    </nav>
-    <div class="nav-right">
-      <div class="lang-switch" id="langSwitch">
-        <button class="lang-btn" data-lang="bn">বাং</button>
-        <button class="lang-btn" data-lang="hi">हिं</button>
-        <button class="lang-btn" data-lang="en">EN</button>
+  <!-- HEADER -->
+  <div class="topbar">
+    <div class="topbar-row">
+      <button class="icon-btn" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <div class="brand">
+        <div class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2 4 5v6c0 5 3.4 8.6 8 9 4.6-.4 8-4 8-9V5l-8-3z"/>
+            <path d="M9 12h6M9 15h4" stroke-width="1.6"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="name">Print Doctor</div>
+          <div class="tag">All Printer &amp; Photocopier Solutions</div>
+        </div>
       </div>
-      <a href="#ai-help" class="nav-cta" data-i18n="nav_cta">সমস্যা লিখুন</a>
-      <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false"><span></span></button>
-    </div>
-  </div>
-</header>
 
-<a href="#ai-help" class="mobile-cta-bar" id="mobileCtaBar">
-  <span data-i18n="nav_cta">সমস্যা লিখুন</span>
-</a>
-
-<div id="top" class="hero">
-  <div>
-    <span class="eyebrow"><span class="dot"></span> <span data-i18n="eyebrow">AI সার্ভিস ইঞ্জিনিয়ার — সবসময় অনলাইন</span></span>
-    <h1 data-i18n-html="h1"></h1>
-    <p class="lead" data-i18n="lead"></p>
-    <div class="hero-ctas">
-      <a href="#ai-help" class="btn-primary" data-i18n="cta_primary"></a>
-      <a href="#problems" class="btn-ghost" data-i18n="cta_ghost"></a>
-    </div>
-    <div class="trust-row">
-      <div class="trust-item"><span class="regmark"></span> <span data-i18n="trust1"></span></div>
-      <div class="trust-item"><span class="regmark"></span> <span data-i18n="trust2"></span></div>
-      <div class="trust-item"><span class="regmark"></span> <span data-i18n="trust3"></span></div>
-    </div>
-  </div>
-
-  <div class="ticket">
-    <div class="ticket-head">
-      <div>
-        <div class="tno mono" data-i18n="ticket_no">টিকেট #PD-04471</div>
-        <div class="display" style="font-weight:700; font-size:17px; margin-top:4px;" data-i18n="ticket_title"></div>
+      <div class="right-icons">
+        <button class="icon-btn" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+        </button>
+        <button class="icon-btn bell-wrap" aria-label="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          <span class="badge">3</span>
+        </button>
+        <div class="avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+        </div>
       </div>
-      <div class="stamp mono" data-i18n="ticket_stamp"></div>
-    </div>
-    <div class="ticket-body">
-      <div class="ticket-row"><span data-i18n="ticket_machine_label"></span><span data-i18n="ticket_machine_val"></span></div>
-      <div class="ticket-row"><span data-i18n="ticket_problem_label"></span><span data-i18n="ticket_problem_val"></span></div>
-      <div class="ticket-row"><span data-i18n="ticket_diag_label"></span><span data-i18n="ticket_diag_val"></span></div>
-      <div class="ticket-row"><span data-i18n="ticket_time_label"></span><span data-i18n="ticket_time_val"></span></div>
-    </div>
-    <div class="ticket-cmyk">
-      <i style="background:var(--cyan)"></i>
-      <i style="background:var(--magenta)"></i>
-      <i style="background:var(--yellow)"></i>
-      <i style="background:#1C1B18"></i>
     </div>
   </div>
+
+  <!-- HERO BANNER -->
+  <div class="hero-wrap">
+    <div class="hero-card">
+      <button class="hero-nav-btn prev" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="hero-nav-btn next" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+
+      <span class="badge-pill">NEW ARRIVAL</span>
+      <h1 class="hero-title">Canon imageRUNNER ADVANCE DX 6870i</h1>
+      <p class="hero-sub">Smart. Secure. Sustainable.</p>
+      <p class="hero-desc">Powerful performance for modern workplaces.</p>
+      <a href="#" class="hero-cta">Explore Now
+        <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+      </a>
+
+      <!-- simple copier illustration -->
+      <svg class="hero-illustration" viewBox="0 0 200 190" fill="none">
+        <rect x="28" y="70" width="130" height="88" rx="10" fill="#D9E2F5"/>
+        <rect x="28" y="70" width="130" height="88" rx="10" stroke="#AFC0E8" stroke-width="1.5"/>
+        <rect x="40" y="30" width="106" height="46" rx="8" fill="#C3D1EE"/>
+        <rect x="40" y="30" width="106" height="46" rx="8" stroke="#AFC0E8" stroke-width="1.5"/>
+        <rect x="96" y="38" width="34" height="24" rx="4" fill="#0B3B8F"/>
+        <rect x="100" y="42" width="8" height="6" rx="1" fill="#5C9BFF"/>
+        <rect x="112" y="42" width="8" height="6" rx="1" fill="#FFB020"/>
+        <rect x="100" y="51" width="20" height="6" rx="1" fill="#8FB4FF"/>
+        <rect x="46" y="88" width="100" height="8" rx="3" fill="#B9C7EA"/>
+        <rect x="46" y="102" width="70" height="6" rx="3" fill="#C7D3EF"/>
+        <rect x="34" y="132" width="34" height="34" rx="5" fill="#C3D1EE"/>
+        <rect x="150" y="120" width="30" height="46" rx="5" fill="#B9C7EA"/>
+        <circle cx="45" cy="172" r="6" fill="#8899BE"/>
+        <circle cx="140" cy="172" r="6" fill="#8899BE"/>
+      </svg>
+    </div>
+
+    <div class="dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+
+  <!-- FEATURE GRID -->
+  <div class="section">
+    <div class="grid">
+
+      <div class="feat-card">
+        <div class="feat-icon bg-blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        </div>
+        <h3>Find Printer</h3>
+        <p>Search all brands &amp; models of printers</p>
+        <div class="feat-arrow bg-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon bg-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 7l3-4h12l3 4"/><circle cx="9" cy="13.5" r="2"/><path d="M15 12h3"/></svg>
+        </div>
+        <h3>Find Photocopier</h3>
+        <p>Search all brands &amp; models of copiers</p>
+        <div class="feat-arrow bg-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon bg-purple">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 19h14"/></svg>
+        </div>
+        <h3>Driver Download</h3>
+        <p>Download drivers for all models</p>
+        <div class="feat-arrow bg-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon bg-orange">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.6 1z"/></svg>
+        </div>
+        <h3>Find Spare Parts</h3>
+        <p>Find original parts for printer &amp; copier</p>
+        <div class="feat-arrow bg-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon bg-pink">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V5"/><circle cx="9" cy="4.3" r="1.1" fill="currentColor" stroke="none"/><path d="M9 13v2M15 13v2"/><path d="M2 12h3M19 12h3"/></svg>
+        </div>
+        <h3>AI Problem Solver</h3>
+        <p>Chat &amp; solve printer or copier problems</p>
+        <div class="feat-arrow bg-pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon bg-teal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="18" cy="21" r="1"/><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21.5 8H6"/></svg>
+        </div>
+        <h3>Buy Machines</h3>
+        <p>Buy new, used &amp; refurbished machines</p>
+        <div class="feat-arrow bg-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon bg-gold">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
+        <h3>Buy Spare Parts</h3>
+        <p>Order original spare parts online</p>
+        <div class="feat-arrow bg-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon bg-navy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.1-3.1a5 5 0 0 1-6.9 6.9L5 22l-3-3 8.9-8.9a5 5 0 0 1 6.9-6.9l-3.1 3.1z"/></svg>
+        </div>
+        <h3>Book Service</h3>
+        <p>Book expert service at your location</p>
+        <div class="feat-arrow bg-navy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AI ASSISTANT BANNER -->
+  <div class="ai-banner">
+    <svg class="ai-bot" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="30" fill="rgba(255,255,255,0.08)"/>
+      <rect x="16" y="20" width="32" height="26" rx="10" fill="#fff"/>
+      <circle cx="25" cy="33" r="3.5" fill="#3A2FD6"/>
+      <circle cx="39" cy="33" r="3.5" fill="#3A2FD6"/>
+      <path d="M25 41q7 5 14 0" stroke="#3A2FD6" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <rect x="29" y="8" width="6" height="10" rx="3" fill="#fff"/>
+      <circle cx="32" cy="7" r="3" fill="#FFD24C"/>
+      <rect x="8" y="30" width="6" height="12" rx="3" fill="#fff"/>
+      <rect x="50" y="30" width="6" height="12" rx="3" fill="#fff"/>
+    </svg>
+    <div class="ai-copy">
+      <div class="eyebrow">Need Help?</div>
+      <h3>Chat with our AI Assistant</h3>
+      <p>Get instant solutions for your printer or photocopier problems.</p>
+      <a href="#" class="start-chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.6 8.6 0 0 1-3.6-.8L3 21l1.9-5a8.4 8.4 0 0 1 3-11.6 8.5 8.5 0 0 1 13.1 7.1z"/></svg>
+        Start Chat
+      </a>
+    </div>
+  </div>
+
+  <!-- POPULAR BRANDS -->
+  <div class="section" style="margin-top:6px;">
+    <div class="brands-head">
+      <h2>Popular Brands</h2>
+      <a href="#" class="view-all">View All
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+    </div>
+    <div class="brands-scroll">
+      <div class="brand-chip">Canon</div>
+      <div class="brand-chip">EPSON</div>
+      <div class="brand-chip">HP</div>
+      <div class="brand-chip">Brother</div>
+      <div class="brand-chip">RICOH</div>
+      <div class="brand-chip">Xerox</div>
+      <div class="brand-chip">Konica Minolta</div>
+      <div class="brand-chip">Sharp</div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <a href="#" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      Home
+    </a>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      Categories
+    </a>
+    <a href="#" class="nav-scan" aria-label="Scan">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M21 7V5a2 2 0 0 0-2-2h-2M3 17v2a2 2 0 0 0 2 2h2M21 17v2a2 2 0 0 1-2 2h-2"/><line x1="4" y1="12" x2="20" y2="12"/></svg>
+    </a>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+      Orders
+    </a>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+      Profile
+    </a>
+  </div>
+
 </div>
-
-<section id="how">
-  <span class="section-tag" data-i18n="tag01"></span>
-  <h2 data-i18n="how_title"></h2>
-  <p class="section-lead" data-i18n="how_lead"></p>
-  <div class="steps">
-    <div class="step">
-      <div class="num">01 <span class="regmark"></span></div>
-      <h3 data-i18n="step1_h"></h3>
-      <p data-i18n="step1_p"></p>
-    </div>
-    <div class="step">
-      <div class="num">02 <span class="regmark"></span></div>
-      <h3 data-i18n="step2_h"></h3>
-      <p data-i18n="step2_p"></p>
-    </div>
-    <div class="step">
-      <div class="num">03 <span class="regmark"></span></div>
-      <h3 data-i18n="step3_h"></h3>
-      <p data-i18n="step3_p"></p>
-    </div>
-  </div>
-</section>
-
-<section id="ai-help">
-  <span class="section-tag" data-i18n="tag02"></span>
-  <h2 data-i18n="ai_title"></h2>
-  <p class="section-lead" data-i18n="ai_lead"></p>
-
-  <div class="panel">
-    <div class="panel-top">
-      <div class="panel-title"><span class="led"></span> <span data-i18n="panel_title"></span></div>
-      <div style="display:flex; align-items:center; gap:14px;">
-        <div class="chat-lang-switch" id="chatLangSwitch">
-          <button data-lang="bn">বাং</button>
-          <button data-lang="hi">हिं</button>
-          <button data-lang="en">EN</button>
-        </div>
-        <div class="panel-lights">
-          <i style="background:var(--cyan)"></i>
-          <i style="background:var(--magenta)"></i>
-          <i style="background:var(--yellow)"></i>
-        </div>
-      </div>
-    </div>
-
-    <div class="screen" id="screen">
-      <div class="msg sys" data-i18n="chat_started"></div>
-      <div class="msg ai"><span class="tag" data-i18n="ai_tag"></span><span id="initialGreeting"></span></div>
-    </div>
-
-    <div class="quick-tags" id="quickTags"></div>
-
-    <div class="input-row">
-      <textarea id="userInput" rows="1"></textarea>
-      <button class="send-btn" id="sendBtn" data-i18n="send_btn"></button>
-    </div>
-  </div>
-  <p class="disclaimer" data-i18n="disclaimer"></p>
-</section>
-
-<section id="problems">
-  <span class="section-tag" data-i18n="tag03"></span>
-  <h2 data-i18n="problems_title"></h2>
-  <p class="section-lead" data-i18n="problems_lead"></p>
-  <div class="grid-3">
-    <div class="problem-card c1">
-      <h4 data-i18n="p1_h"></h4>
-      <p data-i18n="p1_p"></p>
-      <button id="p1btn" data-i18n="ask_btn"></button>
-    </div>
-    <div class="problem-card c2">
-      <h4 data-i18n="p2_h"></h4>
-      <p data-i18n="p2_p"></p>
-      <button id="p2btn" data-i18n="ask_btn"></button>
-    </div>
-    <div class="problem-card c3">
-      <h4 data-i18n="p3_h"></h4>
-      <p data-i18n="p3_p"></p>
-      <button id="p3btn" data-i18n="ask_btn"></button>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-wrap">
-    <div class="footer-brand"><span class="regmark"></span> <span data-i18n="brand"></span></div>
-    <div class="footer-links">
-      <a href="#ai-help" data-i18n="nav_ai"></a>
-      <a href="#how" data-i18n="nav_how"></a>
-      <a href="#problems" data-i18n="nav_problems"></a>
-    </div>
-    <div class="footer-note" data-i18n="footer_note"></div>
-  </div>
-</footer>
-
-<script>
-/* ===================== TRANSLATIONS ===================== */
-const T = {
-  bn: {
-    pageTitle: "প্রিন্ট ডাক্তার — ফটোকপি ও প্রিন্টার সমস্যার AI সমাধান",
-    brand: "প্রিন্ট ডাক্তার",
-    nav_ai: "AI সমাধান",
-    nav_how: "কীভাবে কাজ করে",
-    nav_problems: "সাধারণ সমস্যা",
-    nav_cta: "সমস্যা লিখুন",
-    eyebrow: "AI সার্ভিস ইঞ্জিনিয়ার — সবসময় অনলাইন",
-    h1: 'ফটোকপি বা প্রিন্টার<br>নষ্ট হয়েছে? <span class="accent">সমাধান</span> লিখেই পান।',
-    lead: "আপনার মেশিনের সমস্যা লিখুন — কাগজ জ্যাম, প্রিন্ট ঝাপসা, টোনার দাগ, স্ক্যানার কাজ করছে না — যা কিছুই হোক। আমাদের AI সার্ভিস ইঞ্জিনিয়ার সাথে সাথে ধাপে ধাপে সমাধান বলে দেবে।",
-    cta_primary: "সমস্যা লিখুন, সমাধান পান →",
-    cta_ghost: "সাধারণ সমস্যাগুলো দেখুন",
-    trust1: "তাৎক্ষণিক উত্তর",
-    trust2: "তিনটি ভাষায় সাপোর্ট",
-    trust3: "সব ব্র্যান্ডের মেশিন",
-    ticket_no: "টিকেট #PD-04471",
-    ticket_title: "সার্ভিস রিপোর্ট",
-    ticket_stamp: "সমাধান হয়েছে",
-    ticket_machine_label: "মেশিন",
-    ticket_machine_val: "Canon iR2020 ফটোকপি",
-    ticket_problem_label: "সমস্যা",
-    ticket_problem_val: "বারবার কাগজ জ্যাম",
-    ticket_diag_label: "কারণ নির্ণয়",
-    ticket_diag_val: "রোলার ক্ষয়প্রাপ্ত",
-    ticket_time_label: "সমাধানের সময়",
-    ticket_time_val: "৩ মিনিট",
-    tag01: "০১ · প্রক্রিয়া",
-    how_title: "মাত্র তিনটি ধাপে সমাধান",
-    how_lead: "টেকনিশিয়ানের জন্য অপেক্ষা করার দরকার নেই। নিচের ধাপগুলো অনুসরণ করে এখনই শুরু করুন।",
-    step1_h: "সমস্যা লিখুন",
-    step1_p: "আপনার মেশিনের মডেল ও কী সমস্যা হচ্ছে তা সহজ ভাষায় লিখে দিন — নিচের চ্যাট বক্সে, যেকোনো ভাষায়।",
-    step2_h: "AI বিশ্লেষণ করে",
-    step2_p: "AI সার্ভিস ইঞ্জিনিয়ার আপনার বর্ণনা যাচাই করে সম্ভাব্য কারণ ও ধাপে ধাপে সমাধান বের করে।",
-    step3_h: "নিজেই ঠিক করুন",
-    step3_p: "দেওয়া নির্দেশনা অনুসরণ করে সমস্যাটি সমাধান করুন। কাজ না হলে আরও বিস্তারিত জিজ্ঞেস করুন।",
-    tag02: "০২ · লাইভ সহায়তা",
-    ai_title: "এখানে আপনার সমস্যা লিখুন",
-    ai_lead: "যত বিস্তারিত লিখবেন, সমাধান তত নির্ভুল হবে — মেশিনের নাম/মডেল, কী হচ্ছে, কখন থেকে হচ্ছে তা উল্লেখ করুন। বাংলা, হিন্দি বা ইংরেজি — যেকোনো ভাষায় লিখতে পারেন।",
-    panel_title: "AI SERVICE ENGINEER — ONLINE",
-    chat_started: "— চ্যাট শুরু হয়েছে —",
-    ai_tag: "AI ইঞ্জিনিয়ার",
-    initial_greeting: "নমস্কার! আমি আপনার প্রিন্টার বা ফটোকপি মেশিনের সমস্যা সমাধানে সাহায্য করব। মেশিনের ব্র্যান্ড/মডেল এবং কী সমস্যা হচ্ছে তা লিখুন।",
-    placeholder: "যেমন: আমার HP LaserJet 1020 প্রিন্টার কাগজ টানছে না...",
-    send_btn: "পাঠান →",
-    disclaimer: "এটি একটি AI সহকারী — জটিল হার্ডওয়্যার সমস্যায় সরাসরি টেকনিশিয়ানের পরামর্শও নিন।",
-    tag03: "০৩ · সাধারণ সমস্যা",
-    problems_title: "প্রায়ই যে সমস্যাগুলো হয়",
-    problems_lead: "নিচের যেকোনো একটিতে ক্লিক করলে চ্যাট বক্সে সরাসরি সেই সমস্যা লেখা হয়ে যাবে।",
-    p1_h: "কাগজ বারবার জ্যাম হয়",
-    p1_p: "রোলার ক্ষয়, ভুল কাগজের সাইজ, বা ধুলা জমার কারণে এটি হতে পারে।",
-    p2_h: "প্রিন্ট ঝাপসা বা দাগযুক্ত",
-    p2_p: "টোনার কম, ড্রাম নষ্ট, বা ফিউজার ইউনিটে সমস্যা এর কারণ হতে পারে।",
-    p3_h: "মেশিন চালু হচ্ছে না",
-    p3_p: "পাওয়ার সাপ্লাই, ফিউজ, বা মেইন বোর্ডে সমস্যা থাকতে পারে।",
-    ask_btn: "সমাধান জিজ্ঞেস করুন →",
-    q1: "আমার ফটোকপি মেশিনে বারবার কাগজ জ্যাম হচ্ছে, কী করব?",
-    q2: "প্রিন্ট আউট ঝাপসা আসছে এবং মাঝে মাঝে কালো দাগ থাকছে, সমাধান কী?",
-    q3: "আমার ফটোকপি মেশিন একদম চালু হচ্ছে না, কোনো লাইট বা শব্দ নেই, কী করণীয়?",
-    tag_jam: "কাগজ জ্যাম",
-    tag_blur: "ঝাপসা প্রিন্ট",
-    tag_off: "মেশিন চালু হচ্ছে না",
-    tag_scan: "স্ক্যানার সমস্যা",
-    tag_toner: "টোনার দাগ",
-    tq_jam: "আমার প্রিন্টারে বারবার কাগজ জ্যাম হচ্ছে",
-    tq_blur: "প্রিন্ট আউটে সাদা দাগ বা ঝাপসা প্রিন্ট আসছে",
-    tq_off: "ফটোকপি মেশিন চালু হচ্ছে না, কোনো লাইট জ্বলছে না",
-    tq_scan: "স্ক্যানার কাজ করছে না, স্ক্যান করলে কালো পেজ আসে",
-    tq_toner: "টোনার লিক করছে বা কাপড়ে/কাগজে কালো দাগ লেগে যাচ্ছে",
-    footer_note: "এই AI পরামর্শ শুধুমাত্র সাধারণ দিকনির্দেশনার জন্য। বৈদ্যুতিক অংশ খোলার সময় সতর্ক থাকুন এবং প্রয়োজনে পেশাদার টেকনিশিয়ানের সাহায্য নিন।",
-    err_generic: "দুঃখিত, এই মুহূর্তে উত্তর তৈরি করতে সমস্যা হচ্ছে। আবার চেষ্টা করুন।",
-    err_network: "দুঃখিত, সংযোগে সমস্যা হয়েছে। একটু পর আবার চেষ্টা করুন।"
-  },
-  hi: {
-    pageTitle: "प्रिंट डॉक्टर — फोटोकॉपी और प्रिंटर समस्याओं का AI समाधान",
-    brand: "प्रिंट डॉक्टर",
-    nav_ai: "AI समाधान",
-    nav_how: "यह कैसे काम करता है",
-    nav_problems: "आम समस्याएं",
-    nav_cta: "समस्या लिखें",
-    eyebrow: "AI सर्विस इंजीनियर — हमेशा ऑनलाइन",
-    h1: 'फोटोकॉपी या प्रिंटर<br>खराब हो गया? <span class="accent">समाधान</span> लिखकर पाएं।',
-    lead: "अपनी मशीन की समस्या लिखें — कागज़ जाम, धुंधली प्रिंट, टोनर के दाग, स्कैनर काम नहीं कर रहा — जो भी हो। हमारा AI सर्विस इंजीनियर तुरंत चरण-दर-चरण समाधान बताएगा।",
-    cta_primary: "समस्या लिखें, समाधान पाएं →",
-    cta_ghost: "आम समस्याएं देखें",
-    trust1: "तुरंत जवाब",
-    trust2: "तीन भाषाओं में सहायता",
-    trust3: "सभी ब्रांड की मशीनें",
-    ticket_no: "टिकट #PD-04471",
-    ticket_title: "सर्विस रिपोर्ट",
-    ticket_stamp: "समाधान हो गया",
-    ticket_machine_label: "मशीन",
-    ticket_machine_val: "Canon iR2020 फोटोकॉपी",
-    ticket_problem_label: "समस्या",
-    ticket_problem_val: "बार-बार कागज़ जाम",
-    ticket_diag_label: "निदान",
-    ticket_diag_val: "रोलर घिस गया है",
-    ticket_time_label: "समाधान का समय",
-    ticket_time_val: "3 मिनट",
-    tag01: "01 · प्रक्रिया",
-    how_title: "सिर्फ तीन चरणों में समाधान",
-    how_lead: "टेक्नीशियन का इंतज़ार करने की ज़रूरत नहीं। नीचे दिए चरणों का पालन करके अभी शुरू करें।",
-    step1_h: "समस्या लिखें",
-    step1_p: "अपनी मशीन का मॉडल और क्या समस्या हो रही है, आसान भाषा में नीचे चैट बॉक्स में लिखें — किसी भी भाषा में।",
-    step2_h: "AI विश्लेषण करता है",
-    step2_p: "AI सर्विस इंजीनियर आपके विवरण की जांच करके संभावित कारण और चरण-दर-चरण समाधान बताता है।",
-    step3_h: "खुद ठीक करें",
-    step3_p: "दिए गए निर्देशों का पालन करके समस्या ठीक करें। काम न हो तो और विवरण पूछें।",
-    tag02: "02 · लाइव सहायता",
-    ai_title: "यहां अपनी समस्या लिखें",
-    ai_lead: "जितना विस्तार से लिखेंगे, समाधान उतना ही सटीक होगा — मशीन का नाम/मॉडल, क्या हो रहा है, कब से हो रहा है बताएं। बंगाली, हिंदी या अंग्रेज़ी — किसी भी भाषा में लिख सकते हैं।",
-    panel_title: "AI SERVICE ENGINEER — ONLINE",
-    chat_started: "— चैट शुरू हुई —",
-    ai_tag: "AI इंजीनियर",
-    initial_greeting: "नमस्ते! मैं आपके प्रिंटर या फोटोकॉपी मशीन की समस्या हल करने में मदद करूंगा। मशीन का ब्रांड/मॉडल और क्या समस्या हो रही है, लिखें।",
-    placeholder: "जैसे: मेरा HP LaserJet 1020 प्रिंटर कागज़ नहीं खींच रहा...",
-    send_btn: "भेजें →",
-    disclaimer: "यह एक AI सहायक है — जटिल हार्डवेयर समस्याओं में सीधे टेक्नीशियन से भी सलाह लें।",
-    tag03: "03 · आम समस्याएं",
-    problems_title: "अक्सर होने वाली समस्याएं",
-    problems_lead: "नीचे किसी भी समस्या पर क्लिक करने से वह सीधे चैट बॉक्स में लिखी जाएगी।",
-    p1_h: "बार-बार कागज़ जाम होना",
-    p1_p: "रोलर घिसना, गलत कागज़ का साइज़, या धूल जमना इसका कारण हो सकता है।",
-    p2_h: "धुंधली या दागदार प्रिंट",
-    p2_p: "टोनर कम होना, ड्रम खराब होना, या फ्यूज़र यूनिट में समस्या इसका कारण हो सकता है।",
-    p3_h: "मशीन चालू नहीं हो रही",
-    p3_p: "पावर सप्लाई, फ्यूज़, या मेन बोर्ड में समस्या हो सकती है।",
-    ask_btn: "समाधान पूछें →",
-    q1: "मेरी फोटोकॉपी मशीन में बार-बार कागज़ जाम हो रहा है, क्या करूं?",
-    q2: "प्रिंट आउट धुंधला आ रहा है और कभी-कभी काले दाग रहते हैं, समाधान क्या है?",
-    q3: "मेरी फोटोकॉपी मशीन बिल्कुल चालू नहीं हो रही, कोई लाइट या आवाज़ नहीं है, क्या करें?",
-    tag_jam: "कागज़ जाम",
-    tag_blur: "धुंधली प्रिंट",
-    tag_off: "मशीन चालू नहीं हो रही",
-    tag_scan: "स्कैनर समस्या",
-    tag_toner: "टोनर के दाग",
-    tq_jam: "मेरे प्रिंटर में बार-बार कागज़ जाम हो रहा है",
-    tq_blur: "प्रिंट आउट में सफेद दाग या धुंधली प्रिंट आ रही है",
-    tq_off: "फोटोकॉपी मशीन चालू नहीं हो रही, कोई लाइट नहीं जल रही",
-    tq_scan: "स्कैनर काम नहीं कर रहा, स्कैन करने पर काला पेज आता है",
-    tq_toner: "टोनर लीक हो रहा है या कपड़े/कागज़ पर काले दाग लग रहे हैं",
-    footer_note: "यह AI सलाह केवल सामान्य मार्गदर्शन के लिए है। बिजली के हिस्से खोलते समय सावधान रहें और ज़रूरत पड़ने पर पेशेवर टेक्नीशियन की मदद लें।",
-    err_generic: "क्षमा करें, अभी जवाब तैयार करने में समस्या हो रही है। दोबारा कोशिश करें।",
-    err_network: "क्षमा करें, कनेक्शन में समस्या हुई है। थोड़ी देर बाद फिर कोशिश करें।"
-  },
-  en: {
-    pageTitle: "Print Doctor — AI Solutions for Photocopier & Printer Problems",
-    brand: "Print Doctor",
-    nav_ai: "AI Help",
-    nav_how: "How It Works",
-    nav_problems: "Common Issues",
-    nav_cta: "Describe Issue",
-    eyebrow: "AI Service Engineer — Always Online",
-    h1: 'Photocopier or printer<br>broken? Get your <span class="accent">fix</span> in writing.',
-    lead: "Describe your machine's problem — paper jams, blurry prints, toner smudges, scanner not working — anything at all. Our AI service engineer gives you step-by-step fixes instantly.",
-    cta_primary: "Describe your issue →",
-    cta_ghost: "See common issues",
-    trust1: "Instant answers",
-    trust2: "Support in 3 languages",
-    trust3: "All machine brands",
-    ticket_no: "Ticket #PD-04471",
-    ticket_title: "Service Report",
-    ticket_stamp: "Resolved",
-    ticket_machine_label: "Machine",
-    ticket_machine_val: "Canon iR2020 copier",
-    ticket_problem_label: "Issue",
-    ticket_problem_val: "Repeated paper jams",
-    ticket_diag_label: "Diagnosis",
-    ticket_diag_val: "Worn feed roller",
-    ticket_time_label: "Time to fix",
-    ticket_time_val: "3 minutes",
-    tag01: "01 · Process",
-    how_title: "Fixed in just three steps",
-    how_lead: "No need to wait for a technician. Follow the steps below and get started right now.",
-    step1_h: "Describe the problem",
-    step1_p: "Type your machine's model and what's going wrong, in plain language, in any of the three languages.",
-    step2_h: "AI diagnoses it",
-    step2_p: "The AI service engineer reviews your description and works out likely causes and a step-by-step fix.",
-    step3_h: "Fix it yourself",
-    step3_p: "Follow the given instructions to resolve the issue. If it doesn't work, ask for more detail.",
-    tag02: "02 · Live support",
-    ai_title: "Describe your problem here",
-    ai_lead: "The more detail you give — machine name/model, what's happening, since when — the more accurate the fix. Write in Bengali, Hindi, or English — whichever you prefer.",
-    panel_title: "AI SERVICE ENGINEER — ONLINE",
-    chat_started: "— chat started —",
-    ai_tag: "AI Engineer",
-    initial_greeting: "Hello! I'll help you fix your printer or photocopier. Tell me the machine's brand/model and what's going wrong.",
-    placeholder: "e.g. My HP LaserJet 1020 printer isn't pulling paper...",
-    send_btn: "Send →",
-    disclaimer: "This is an AI assistant — for complex hardware issues, also consult a technician directly.",
-    tag03: "03 · Common issues",
-    problems_title: "Problems people run into most",
-    problems_lead: "Click any issue below and it'll be typed straight into the chat box.",
-    p1_h: "Paper keeps jamming",
-    p1_p: "Worn rollers, wrong paper size, or dust buildup can cause this.",
-    p2_h: "Blurry or streaked prints",
-    p2_p: "Low toner, a worn drum, or a faulty fuser unit can be the cause.",
-    p3_h: "Machine won't turn on",
-    p3_p: "Could be the power supply, a blown fuse, or the main board.",
-    ask_btn: "Ask for a fix →",
-    q1: "My photocopier keeps jamming paper, what should I do?",
-    q2: "My printouts are blurry with occasional black streaks — what's the fix?",
-    q3: "My photocopier won't turn on at all, no lights or sound — what should I check?",
-    tag_jam: "Paper jam",
-    tag_blur: "Blurry print",
-    tag_off: "Won't turn on",
-    tag_scan: "Scanner issue",
-    tag_toner: "Toner smudges",
-    tq_jam: "My printer keeps jamming paper repeatedly",
-    tq_blur: "My printouts have white streaks or come out blurry",
-    tq_off: "My photocopier won't turn on, no lights at all",
-    tq_scan: "Scanner isn't working, scans come out all black",
-    tq_toner: "Toner is leaking or leaving black smudges on paper/clothes",
-    footer_note: "This AI advice is for general guidance only. Be careful when opening electrical parts, and get a professional technician if needed.",
-    err_generic: "Sorry, I'm having trouble generating a reply right now. Please try again.",
-    err_network: "Sorry, there was a connection problem. Please try again shortly."
-  }
-};
-
-let currentLang = 'bn';
-let history = [];
-
-function applyLanguage(lang){
-  currentLang = lang;
-  const dict = T[lang];
-  document.documentElement.lang = lang;
-  document.title = dict.pageTitle;
-
-  document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const key = el.getAttribute('data-i18n');
-    if(dict[key] !== undefined) el.textContent = dict[key];
-  });
-  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
-    const key = el.getAttribute('data-i18n-html');
-    if(dict[key] !== undefined) el.innerHTML = dict[key];
-  });
-
-  document.getElementById('initialGreeting').textContent = dict.initial_greeting;
-  document.getElementById('userInput').placeholder = dict.placeholder;
-
-  // quick tags in the panel
-  const tagDefs = [
-    ['tag_jam','tq_jam'], ['tag_blur','tq_blur'], ['tag_off','tq_off'],
-    ['tag_scan','tq_scan'], ['tag_toner','tq_toner']
-  ];
-  const qtWrap = document.getElementById('quickTags');
-  qtWrap.innerHTML = '';
-  tagDefs.forEach(([labelKey, qKey])=>{
-    const b = document.createElement('button');
-    b.className = 'qtag';
-    b.textContent = dict[labelKey];
-    b.addEventListener('click', ()=> fillAndFocus(dict[qKey]));
-    qtWrap.appendChild(b);
-  });
-
-  // problem card buttons
-  document.getElementById('p1btn').onclick = ()=> fillAndFocus(dict.q1);
-  document.getElementById('p2btn').onclick = ()=> fillAndFocus(dict.q2);
-  document.getElementById('p3btn').onclick = ()=> fillAndFocus(dict.q3);
-
-  // sync switch button states (both nav + chat panel)
-  document.querySelectorAll('.lang-btn').forEach(b=>{
-    b.classList.toggle('active', b.getAttribute('data-lang')===lang);
-  });
-  document.querySelectorAll('#chatLangSwitch button').forEach(b=>{
-    b.classList.toggle('active', b.getAttribute('data-lang')===lang);
-  });
-
-  // reset the visible greeting message if chat hasn't started yet
-  if(history.length === 0){
-    document.getElementById('initialGreeting').textContent = dict.initial_greeting;
-  }
-}
-
-function fillAndFocus(text){
-  document.getElementById('ai-help').scrollIntoView({behavior:'smooth', block:'start'});
-  const inputEl = document.getElementById('userInput');
-  inputEl.value = text;
-  inputEl.style.height = 'auto';
-  inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
-  setTimeout(()=> inputEl.focus(), 400);
-}
-
-document.querySelectorAll('.lang-btn, #chatLangSwitch button').forEach(btn=>{
-  btn.addEventListener('click', ()=> applyLanguage(btn.getAttribute('data-lang')));
-});
-
-/* ===================== CHAT LOGIC ===================== */
-const screenEl = document.getElementById('screen');
-const inputEl = document.getElementById('userInput');
-const sendBtn = document.getElementById('sendBtn');
-
-function langName(lang){
-  return { bn: 'বাংলা (Bengali)', hi: 'हिन्दी (Hindi)', en: 'English' }[lang];
-}
-
-function buildSystemPrompt(lang){
-  return `তুমি/आप/You are an experienced photocopier and printer service engineer with 15 years of experience across all major brands (Canon, HP, Epson, Xerox, Ricoh, Brother, Samsung).
-
-LANGUAGE RULES:
-- The customer's preferred language is currently set to ${langName(lang)}. Reply in that language by default.
-- However, if the customer writes their message in a different language (Bengali, Hindi, or English), always reply in the SAME language the customer just used, not the default.
-- Never mix languages within a single reply.
-
-BEHAVIOR RULES:
-- Keep the tone simple, clear, and friendly, like a real technician talking to a customer.
-- First briefly state the likely cause(s) of the problem.
-- Then give a numbered, step-by-step fix, starting with the simplest thing the customer can try themselves at home or in their shop.
-- Ask for more details when needed (machine model, how long the problem has existed, any sounds/lights).
-- Warn about electric shock or fire risk where relevant, and recommend calling a professional technician for anything unsafe or complex.
-- Keep replies concise and practical — no filler.
-- Always identify yourself as an "AI Service Engineer", never pretend to be human.`;
-}
-
-function addMessage(role, text) {
-  const div = document.createElement('div');
-  if (role === 'user') {
-    div.className = 'msg user';
-    div.textContent = text;
-  } else {
-    div.className = 'msg ai';
-    const tag = document.createElement('span');
-    tag.className = 'tag';
-    tag.textContent = T[currentLang].ai_tag;
-    div.appendChild(tag);
-    div.appendChild(document.createTextNode(text));
-  }
-  screenEl.appendChild(div);
-  screenEl.scrollTop = screenEl.scrollHeight;
-}
-
-function showTyping() {
-  const div = document.createElement('div');
-  div.className = 'typing';
-  div.id = 'typingIndicator';
-  div.innerHTML = '<span></span><span></span><span></span>';
-  screenEl.appendChild(div);
-  screenEl.scrollTop = screenEl.scrollHeight;
-}
-function hideTyping() {
-  const el = document.getElementById('typingIndicator');
-  if (el) el.remove();
-}
-
-async function sendMessage(text) {
-  if (!text.trim()) return;
-  addMessage('user', text);
-  history.push({ role: 'user', content: text });
-  inputEl.value = '';
-  inputEl.style.height = 'auto';
-  sendBtn.disabled = true;
-  showTyping();
-
-  try {
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        system: buildSystemPrompt(currentLang),
-        messages: history
-      })
-    });
-    const data = await response.json();
-    hideTyping();
-
-    let replyText = "";
-    if (data && data.content) {
-      replyText = data.content
-        .map(block => block.type === 'text' ? block.text : '')
-        .filter(Boolean)
-        .join('\n');
-    }
-    if (!replyText) replyText = T[currentLang].err_generic;
-    addMessage('ai', replyText);
-    history.push({ role: 'assistant', content: replyText });
-  } catch (err) {
-    hideTyping();
-    addMessage('ai', T[currentLang].err_network);
-    console.error(err);
-  } finally {
-    sendBtn.disabled = false;
-  }
-}
-
-sendBtn.addEventListener('click', () => sendMessage(inputEl.value));
-inputEl.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendMessage(inputEl.value);
-  }
-});
-inputEl.addEventListener('input', () => {
-  inputEl.style.height = 'auto';
-  inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
-});
-
-/* ===================== MOBILE NAV (hamburger + bottom CTA) ===================== */
-const headerEl = document.querySelector('header');
-const hamburgerBtn = document.getElementById('hamburgerBtn');
-
-function closeMenu(){
-  headerEl.classList.remove('menu-open');
-  hamburgerBtn.setAttribute('aria-expanded', 'false');
-}
-function toggleMenu(){
-  const open = headerEl.classList.toggle('menu-open');
-  hamburgerBtn.setAttribute('aria-expanded', String(open));
-}
-hamburgerBtn.addEventListener('click', toggleMenu);
-
-// close the dropdown once a nav link is tapped
-document.querySelectorAll('.nav-links a').forEach(a=>{
-  a.addEventListener('click', closeMenu);
-});
-// close if the person taps outside the open menu
-document.addEventListener('click', (e)=>{
-  if(headerEl.classList.contains('menu-open') && !headerEl.contains(e.target)){
-    closeMenu();
-  }
-});
-
-// fixed bottom "সমস্যা লিখুন" bar: hide once the chat panel itself is visible
-const mobileCtaBar = document.getElementById('mobileCtaBar');
-const aiHelpSection = document.getElementById('ai-help');
-if(mobileCtaBar && aiHelpSection && 'IntersectionObserver' in window){
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      mobileCtaBar.classList.toggle('hide', entry.isIntersecting);
-    });
-  }, { rootMargin: '0px 0px -40% 0px', threshold: 0 });
-  io.observe(aiHelpSection);
-}
-
-/* init */
-applyLanguage('bn');
-
-/* PWA: সার্ভিস ওয়ার্কার রেজিস্ট্রেশন — অ্যাপটাকে ইনস্টলযোগ্য করে তোলে */
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
-  });
-}
-</script>
-
 </body>
 </html>
