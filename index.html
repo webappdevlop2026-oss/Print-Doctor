@@ -1114,7 +1114,13 @@ Rules you must always follow:
       }
 
       if(!replyText){
+        // TEMP DEBUG: append the real backend error so we can diagnose the
+        // "AI service unreachable" issue. Remove the extra line once fixed.
         replyText = errorMsgs[chatLang];
+        if (data && data.error) {
+          console.error('AI backend error:', data.error);
+          replyText += '\n\n[debug] ' + JSON.stringify(data.error).slice(0, 500);
+        }
       } else {
         history.push({ role:'assistant', content:replyText });
       }
