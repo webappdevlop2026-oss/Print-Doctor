@@ -405,6 +405,142 @@
     border:4px solid #fff;
   }
   .nav-scan svg{width:22px; height:22px;}
+
+  /* ================= INTERACTIVE ADDITIONS ================= */
+  .nav-item, .nav-scan, .feat-card, .brand-chip, .hero-nav-btn, .dot, .icon-btn, .avatar, .hero-cta, .start-chat, .view-all{
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+    transition:transform .12s ease, opacity .12s ease;
+  }
+  .feat-card:active, .brand-chip:active, .hero-cta:active, .start-chat:active, .icon-btn:active, .avatar:active, .nav-scan:active{
+    transform:scale(0.95);
+    opacity:0.85;
+  }
+  .nav-item{background:none; border:none;}
+
+  .backdrop{
+    position:fixed; inset:0;
+    background:rgba(10,18,40,0.5);
+    z-index:60;
+    opacity:0; pointer-events:none;
+    transition:opacity .22s ease;
+  }
+  .backdrop.show{opacity:1; pointer-events:auto;}
+
+  .drawer{
+    position:fixed; top:0; left:0; bottom:0;
+    width:78%; max-width:320px;
+    background:#fff;
+    z-index:70;
+    transform:translateX(-100%);
+    transition:transform .28s cubic-bezier(.2,.8,.2,1);
+    display:flex; flex-direction:column;
+    box-shadow:16px 0 40px rgba(0,0,0,0.2);
+  }
+  .drawer.open{transform:translateX(0);}
+  .drawer-head{
+    background:linear-gradient(135deg, var(--navy-deep), var(--navy-light));
+    color:#fff; padding:26px 20px 20px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .drawer-head .avatar{width:44px; height:44px; background:rgba(255,255,255,0.2);}
+  .drawer-head .avatar svg{width:22px; height:22px;}
+  .drawer-head .who .n{font-family:'Poppins',sans-serif; font-weight:700; font-size:15px;}
+  .drawer-head .who .s{font-size:11px; color:rgba(255,255,255,0.75); margin-top:2px;}
+  .drawer-close{margin-left:auto; width:30px; height:30px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.15); border-radius:50%;}
+  .drawer-close svg{width:16px; height:16px;}
+  .drawer-links{padding:10px 8px; overflow-y:auto;}
+  .drawer-link{
+    display:flex; align-items:center; gap:13px;
+    padding:12px 12px; border-radius:12px;
+    font-size:13.5px; font-weight:600; color:var(--ink);
+  }
+  .drawer-link:active{background:var(--bg);}
+  .drawer-link svg{width:19px; height:19px; color:var(--navy); flex-shrink:0;}
+
+  .search-overlay{
+    position:fixed; top:0; left:50%; transform:translateX(-50%) translateY(-100%);
+    width:100%; max-width:440px;
+    background:#fff; z-index:75;
+    padding:16px; box-shadow:0 10px 24px rgba(0,0,0,0.12);
+    transition:transform .25s ease;
+    display:flex; gap:10px; align-items:center;
+  }
+  .search-overlay.open{transform:translateX(-50%) translateY(0);}
+  .search-overlay input{
+    flex:1; border:1.5px solid var(--line); background:var(--bg);
+    border-radius:12px; padding:11px 14px; font-size:13.5px; font-family:inherit; color:var(--ink);
+    outline:none;
+  }
+  .search-overlay input:focus{border-color:var(--navy);}
+  .search-cancel{font-size:13px; font-weight:600; color:var(--navy); flex-shrink:0;}
+
+  .toast{
+    position:fixed; bottom:104px; left:50%;
+    transform:translateX(-50%) translateY(16px);
+    background:var(--ink); color:#fff;
+    font-size:12.5px; font-weight:500;
+    padding:11px 18px; border-radius:24px;
+    z-index:90; opacity:0; pointer-events:none;
+    transition:opacity .2s ease, transform .2s ease;
+    white-space:nowrap;
+    box-shadow:0 10px 24px rgba(0,0,0,0.25);
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  .view{display:none;}
+  .view.active{display:block;}
+  .placeholder-view{
+    padding:60px 24px; text-align:center; color:var(--slate);
+  }
+  .placeholder-view .pv-icon{
+    width:64px; height:64px; border-radius:50%;
+    background:var(--card); box-shadow:var(--shadow);
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 16px; color:var(--navy);
+  }
+  .placeholder-view .pv-icon svg{width:28px; height:28px;}
+  .placeholder-view h3{font-size:16px; color:var(--ink); margin-bottom:6px;}
+  .placeholder-view p{font-size:12.5px; line-height:1.5;}
+
+  .chat-modal{
+    position:fixed; left:50%; bottom:0; transform:translateX(-50%) translateY(100%);
+    width:100%; max-width:440px; height:78vh;
+    background:var(--bg); z-index:80;
+    border-radius:22px 22px 0 0;
+    display:flex; flex-direction:column;
+    transition:transform .3s cubic-bezier(.2,.8,.2,1);
+    box-shadow:0 -10px 40px rgba(0,0,0,0.25);
+  }
+  .chat-modal.open{transform:translateX(-50%) translateY(0);}
+  .chat-head{
+    background:linear-gradient(135deg, var(--navy-deep), var(--navy-light));
+    color:#fff; padding:16px 18px; border-radius:22px 22px 0 0;
+    display:flex; align-items:center; gap:10px;
+  }
+  .chat-head .t{flex:1;}
+  .chat-head .t .n{font-family:'Poppins',sans-serif; font-weight:700; font-size:14.5px;}
+  .chat-head .t .s{font-size:10.5px; color:rgba(255,255,255,0.75);}
+  .chat-close{width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center;}
+  .chat-close svg{width:15px; height:15px;}
+  .chat-body{flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px;}
+  .msg{max-width:80%; padding:10px 13px; border-radius:14px; font-size:12.5px; line-height:1.45;}
+  .msg.bot{background:#fff; box-shadow:var(--shadow); align-self:flex-start; border-bottom-left-radius:4px;}
+  .msg.user{background:var(--navy); color:#fff; align-self:flex-end; border-bottom-right-radius:4px;}
+  .chat-input-row{
+    display:flex; gap:8px; padding:12px; background:#fff; border-top:1px solid var(--line);
+  }
+  .chat-input-row input{
+    flex:1; border:1.5px solid var(--line); border-radius:20px; padding:10px 15px;
+    font-size:12.5px; font-family:inherit; outline:none;
+  }
+  .chat-input-row input:focus{border-color:var(--navy);}
+  .chat-send{
+    width:38px; height:38px; border-radius:50%; background:var(--navy); color:#fff;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .chat-send svg{width:16px; height:16px;}
 </style>
 </head>
 <body>
@@ -413,7 +549,7 @@
   <!-- HEADER -->
   <div class="topbar">
     <div class="topbar-row">
-      <button class="icon-btn" aria-label="Menu">
+      <button class="icon-btn" id="menuBtn" aria-label="Menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
 
@@ -431,35 +567,77 @@
       </div>
 
       <div class="right-icons">
-        <button class="icon-btn" aria-label="Search">
+        <button class="icon-btn" id="searchBtn" aria-label="Search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
         </button>
-        <button class="icon-btn bell-wrap" aria-label="Notifications">
+        <button class="icon-btn bell-wrap" id="bellBtn" aria-label="Notifications">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
           <span class="badge">3</span>
         </button>
-        <div class="avatar">
+        <div class="avatar" id="avatarBtn">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay" id="searchOverlay">
+    <input type="text" id="searchInput" placeholder="Search printers, parts, brands...">
+    <span class="search-cancel" id="searchCancel">Cancel</span>
+  </div>
+
+  <!-- SIDE DRAWER -->
+  <div class="drawer" id="drawer">
+    <div class="drawer-head">
+      <div class="avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg></div>
+      <div class="who"><div class="n">Welcome, Guest</div><div class="s">Sign in to sync your orders</div></div>
+      <button class="drawer-close" id="drawerClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg></button>
+    </div>
+    <div class="drawer-links">
+      <a class="drawer-link" href="#" data-toast="Home is already open">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg> Home
+      </a>
+      <a class="drawer-link" href="#" data-toast="Printer catalogue opening soon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="6" y="14" width="12" height="8"/></svg> Printers
+      </a>
+      <a class="drawer-link" href="#" data-toast="Photocopier catalogue opening soon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="9" cy="13.5" r="2"/></svg> Photocopiers
+      </a>
+      <a class="drawer-link" href="#" data-toast="Spare parts store opening soon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9"/></svg> Spare Parts
+      </a>
+      <a class="drawer-link" id="drawerChatLink" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.6 8.6 0 0 1-3.6-.8L3 21l1.9-5a8.4 8.4 0 0 1 3-11.6 8.5 8.5 0 0 1 13.1 7.1z"/></svg> AI Problem Solver
+      </a>
+      <a class="drawer-link" href="#" data-toast="Booking a technician opening soon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.1-3.1a5 5 0 0 1-6.9 6.9L5 22l-3-3 8.9-8.9a5 5 0 0 1 6.9-6.9l-3.1 3.1z"/></svg> Book Service
+      </a>
+      <a class="drawer-link" href="#" data-toast="Settings opening soon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3"/></svg> Settings
+      </a>
+    </div>
+  </div>
+  <div class="backdrop" id="backdrop"></div>
+
+  <!-- ===== HOME VIEW ===== -->
+  <div class="view active" id="view-home">
+
   <!-- HERO BANNER -->
   <div class="hero-wrap">
     <div class="hero-card">
-      <button class="hero-nav-btn prev" aria-label="Previous">
+      <button class="hero-nav-btn prev" id="heroPrev" aria-label="Previous">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
-      <button class="hero-nav-btn next" aria-label="Next">
+      <button class="hero-nav-btn next" id="heroNext" aria-label="Next">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </button>
 
-      <span class="badge-pill">NEW ARRIVAL</span>
-      <h1 class="hero-title">Canon imageRUNNER ADVANCE DX 6870i</h1>
-      <p class="hero-sub">Smart. Secure. Sustainable.</p>
-      <p class="hero-desc">Powerful performance for modern workplaces.</p>
-      <a href="#" class="hero-cta">Explore Now
+      <span class="badge-pill" id="heroBadge">NEW ARRIVAL</span>
+      <h1 class="hero-title" id="heroTitle">Canon imageRUNNER ADVANCE DX 6870i</h1>
+      <p class="hero-sub" id="heroSub">Smart. Secure. Sustainable.</p>
+      <p class="hero-desc" id="heroDesc">Powerful performance for modern workplaces.</p>
+      <a href="#" class="hero-cta" id="heroCta">Explore Now
         <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
       </a>
 
@@ -482,11 +660,11 @@
       </svg>
     </div>
 
-    <div class="dots">
-      <span class="dot active"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
+    <div class="dots" id="heroDots">
+      <span class="dot active" data-i="0"></span>
+      <span class="dot" data-i="1"></span>
+      <span class="dot" data-i="2"></span>
+      <span class="dot" data-i="3"></span>
     </div>
   </div>
 
@@ -494,7 +672,7 @@
   <div class="section">
     <div class="grid">
 
-      <div class="feat-card">
+      <div class="feat-card" data-toast="Printer finder opening soon">
         <div class="feat-icon bg-blue">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
         </div>
@@ -503,7 +681,7 @@
         <div class="feat-arrow bg-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
       </div>
 
-      <div class="feat-card">
+      <div class="feat-card" data-toast="Photocopier finder opening soon">
         <div class="feat-icon bg-green">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 7l3-4h12l3 4"/><circle cx="9" cy="13.5" r="2"/><path d="M15 12h3"/></svg>
         </div>
@@ -512,7 +690,7 @@
         <div class="feat-arrow bg-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
       </div>
 
-      <div class="feat-card">
+      <div class="feat-card" data-toast="Driver library opening soon">
         <div class="feat-icon bg-purple">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 19h14"/></svg>
         </div>
@@ -521,7 +699,7 @@
         <div class="feat-arrow bg-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
       </div>
 
-      <div class="feat-card">
+      <div class="feat-card" data-toast="Spare parts finder opening soon">
         <div class="feat-icon bg-orange">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.6 1z"/></svg>
         </div>
@@ -530,7 +708,7 @@
         <div class="feat-arrow bg-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
       </div>
 
-      <div class="feat-card">
+      <div class="feat-card" id="cardChat">
         <div class="feat-icon bg-pink">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V5"/><circle cx="9" cy="4.3" r="1.1" fill="currentColor" stroke="none"/><path d="M9 13v2M15 13v2"/><path d="M2 12h3M19 12h3"/></svg>
         </div>
@@ -539,7 +717,7 @@
         <div class="feat-arrow bg-pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
       </div>
 
-      <div class="feat-card">
+      <div class="feat-card" data-toast="Machine store opening soon">
         <div class="feat-icon bg-teal">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="18" cy="21" r="1"/><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21.5 8H6"/></svg>
         </div>
@@ -548,7 +726,7 @@
         <div class="feat-arrow bg-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
       </div>
 
-      <div class="feat-card">
+      <div class="feat-card" data-toast="Spare parts store opening soon">
         <div class="feat-icon bg-gold">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         </div>
@@ -557,7 +735,7 @@
         <div class="feat-arrow bg-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
       </div>
 
-      <div class="feat-card">
+      <div class="feat-card" data-toast="Service booking opening soon">
         <div class="feat-icon bg-navy">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.1-3.1a5 5 0 0 1-6.9 6.9L5 22l-3-3 8.9-8.9a5 5 0 0 1 6.9-6.9l-3.1 3.1z"/></svg>
         </div>
@@ -570,7 +748,7 @@
   </div>
 
   <!-- AI ASSISTANT BANNER -->
-  <div class="ai-banner">
+  <div class="ai-banner" id="aiBanner">
     <svg class="ai-bot" viewBox="0 0 64 64" fill="none">
       <circle cx="32" cy="32" r="30" fill="rgba(255,255,255,0.08)"/>
       <rect x="16" y="20" width="32" height="26" rx="10" fill="#fff"/>
@@ -586,7 +764,7 @@
       <div class="eyebrow">Need Help?</div>
       <h3>Chat with our AI Assistant</h3>
       <p>Get instant solutions for your printer or photocopier problems.</p>
-      <a href="#" class="start-chat">
+      <a href="#" class="start-chat" id="startChatBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.6 8.6 0 0 1-3.6-.8L3 21l1.9-5a8.4 8.4 0 0 1 3-11.6 8.5 8.5 0 0 1 13.1 7.1z"/></svg>
         Start Chat
       </a>
@@ -597,45 +775,247 @@
   <div class="section" style="margin-top:6px;">
     <div class="brands-head">
       <h2>Popular Brands</h2>
-      <a href="#" class="view-all">View All
+      <a href="#" class="view-all" data-toast="Full brand list opening soon">View All
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </a>
     </div>
     <div class="brands-scroll">
-      <div class="brand-chip">Canon</div>
-      <div class="brand-chip">EPSON</div>
-      <div class="brand-chip">HP</div>
-      <div class="brand-chip">Brother</div>
-      <div class="brand-chip">RICOH</div>
-      <div class="brand-chip">Xerox</div>
-      <div class="brand-chip">Konica Minolta</div>
-      <div class="brand-chip">Sharp</div>
+      <div class="brand-chip" data-toast="Canon products opening soon">Canon</div>
+      <div class="brand-chip" data-toast="EPSON products opening soon">EPSON</div>
+      <div class="brand-chip" data-toast="HP products opening soon">HP</div>
+      <div class="brand-chip" data-toast="Brother products opening soon">Brother</div>
+      <div class="brand-chip" data-toast="RICOH products opening soon">RICOH</div>
+      <div class="brand-chip" data-toast="Xerox products opening soon">Xerox</div>
+      <div class="brand-chip" data-toast="Konica Minolta products opening soon">Konica Minolta</div>
+      <div class="brand-chip" data-toast="Sharp products opening soon">Sharp</div>
+    </div>
+  </div>
+
+  </div>
+  <!-- ===== END HOME VIEW ===== -->
+
+  <!-- ===== CATEGORIES VIEW ===== -->
+  <div class="view" id="view-categories">
+    <div class="placeholder-view">
+      <div class="pv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+      <h3>Categories</h3>
+      <p>Printers, photocopiers, drivers &amp; parts &mdash; organized browsing is coming soon to this screen.</p>
+    </div>
+  </div>
+
+  <!-- ===== ORDERS VIEW ===== -->
+  <div class="view" id="view-orders">
+    <div class="placeholder-view">
+      <div class="pv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></div>
+      <h3>No orders yet</h3>
+      <p>Machines and spare parts you order will show up here so you can track them.</p>
+    </div>
+  </div>
+
+  <!-- ===== PROFILE VIEW ===== -->
+  <div class="view" id="view-profile">
+    <div class="placeholder-view">
+      <div class="pv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg></div>
+      <h3>You're browsing as a guest</h3>
+      <p>Sign in to save your printers, track orders, and get faster service booking.</p>
     </div>
   </div>
 
   <!-- BOTTOM NAV -->
   <div class="bottom-nav">
-    <a href="#" class="nav-item active">
+    <button class="nav-item active" data-view="home">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
       Home
-    </a>
-    <a href="#" class="nav-item">
+    </button>
+    <button class="nav-item" data-view="categories">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
       Categories
-    </a>
-    <a href="#" class="nav-scan" aria-label="Scan">
+    </button>
+    <button class="nav-scan" id="scanBtn" aria-label="Scan">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M21 7V5a2 2 0 0 0-2-2h-2M3 17v2a2 2 0 0 0 2 2h2M21 17v2a2 2 0 0 1-2 2h-2"/><line x1="4" y1="12" x2="20" y2="12"/></svg>
-    </a>
-    <a href="#" class="nav-item">
+    </button>
+    <button class="nav-item" data-view="orders">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
       Orders
-    </a>
-    <a href="#" class="nav-item">
+    </button>
+    <button class="nav-item" data-view="profile">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>
       Profile
-    </a>
+    </button>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- CHAT MODAL -->
+  <div class="chat-modal" id="chatModal">
+    <div class="chat-head">
+      <div class="t">
+        <div class="n">AI Problem Solver</div>
+        <div class="s">Usually replies in seconds</div>
+      </div>
+      <button class="chat-close" id="chatClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg></button>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="msg bot">Hi! I'm the Print Doctor assistant. Tell me what's wrong with your printer or copier &mdash; paper jam, error code, faded prints, anything.</div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Describe your printer problem...">
+      <button class="chat-send" id="chatSend">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+      </button>
+    </div>
   </div>
 
 </div>
+
+<script>
+(function(){
+  const $ = (id) => document.getElementById(id);
+  const backdrop = $('backdrop');
+  const drawer = $('drawer');
+  const searchOverlay = $('searchOverlay');
+  const toastEl = $('toast');
+  let toastTimer;
+
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=> toastEl.classList.remove('show'), 2200);
+  }
+
+  function openBackdrop(){ backdrop.classList.add('show'); }
+  function closeBackdrop(){ backdrop.classList.remove('show'); }
+
+  // ---- Drawer ----
+  $('menuBtn').addEventListener('click', ()=>{
+    drawer.classList.add('open');
+    openBackdrop();
+  });
+  function closeDrawer(){
+    drawer.classList.remove('open');
+    if(!searchOverlay.classList.contains('open')) closeBackdrop();
+  }
+  $('drawerClose').addEventListener('click', closeDrawer);
+
+  // ---- Search overlay ----
+  $('searchBtn').addEventListener('click', ()=>{
+    searchOverlay.classList.add('open');
+    openBackdrop();
+    setTimeout(()=> $('searchInput').focus(), 260);
+  });
+  function closeSearch(){
+    searchOverlay.classList.remove('open');
+    if(!drawer.classList.contains('open')) closeBackdrop();
+  }
+  $('searchCancel').addEventListener('click', closeSearch);
+  $('searchInput').addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' && e.target.value.trim()){
+      showToast('Searching for "' + e.target.value.trim() + '"...');
+      closeSearch();
+      e.target.value = '';
+    }
+  });
+
+  backdrop.addEventListener('click', ()=>{
+    closeDrawer();
+    closeSearch();
+  });
+
+  // ---- Bell / avatar ----
+  $('bellBtn').addEventListener('click', ()=> showToast('You have 3 new notifications'));
+  $('avatarBtn').addEventListener('click', ()=> switchView('profile'));
+
+  // ---- Generic data-toast elements ----
+  document.querySelectorAll('[data-toast]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      e.preventDefault();
+      showToast(el.getAttribute('data-toast'));
+    });
+  });
+
+  // ---- Hero carousel ----
+  const slides = [
+    { badge:'NEW ARRIVAL', title:'Canon imageRUNNER ADVANCE DX 6870i', sub:'Smart. Secure. Sustainable.', desc:'Powerful performance for modern workplaces.' },
+    { badge:'BEST SELLER', title:'HP LaserJet Pro MFP 4303', sub:'Fast. Reliable. Affordable.', desc:'Built for busy small-office print rooms.' },
+    { badge:'ON OFFER', title:'Genuine Toner Cartridge Bundle', sub:'Up to 20% off this month.', desc:'Original parts, verified compatibility.' },
+    { badge:'SERVICE', title:'Same-Day Technician Visit', sub:'Book before 2 PM, get seen today.', desc:'Certified engineers for all major brands.' }
+  ];
+  let slideIndex = 0;
+  const heroBadge = $('heroBadge'), heroTitle = $('heroTitle'), heroSub = $('heroSub'), heroDesc = $('heroDesc');
+  const dots = Array.from(document.querySelectorAll('#heroDots .dot'));
+
+  function renderSlide(i){
+    slideIndex = (i + slides.length) % slides.length;
+    const s = slides[slideIndex];
+    heroBadge.textContent = s.badge;
+    heroTitle.textContent = s.title;
+    heroSub.textContent = s.sub;
+    heroDesc.textContent = s.desc;
+    dots.forEach((d, idx)=> d.classList.toggle('active', idx === slideIndex));
+  }
+  $('heroPrev').addEventListener('click', ()=> renderSlide(slideIndex - 1));
+  $('heroNext').addEventListener('click', ()=> renderSlide(slideIndex + 1));
+  dots.forEach(d=> d.addEventListener('click', ()=> renderSlide(parseInt(d.dataset.i, 10))));
+  $('heroCta').addEventListener('click', (e)=>{ e.preventDefault(); showToast(slides[slideIndex].title + ' — details coming soon'); });
+  setInterval(()=> renderSlide(slideIndex + 1), 5000);
+
+  // ---- Bottom nav / view switching ----
+  const views = { home:$('view-home'), categories:$('view-categories'), orders:$('view-orders'), profile:$('view-profile') };
+  const navItems = document.querySelectorAll('.nav-item');
+  function switchView(name){
+    Object.entries(views).forEach(([k, el])=> el.classList.toggle('active', k === name));
+    navItems.forEach(btn=> btn.classList.toggle('active', btn.dataset.view === name));
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  navItems.forEach(btn=> btn.addEventListener('click', ()=> switchView(btn.dataset.view)));
+  $('scanBtn').addEventListener('click', ()=> showToast('Opening camera to scan your device...'));
+
+  // ---- Chat modal ----
+  const chatModal = $('chatModal');
+  const chatBody = $('chatBody');
+  const chatInput = $('chatInput');
+
+  function openChat(){ chatModal.classList.add('open'); closeDrawer(); }
+  function closeChat(){ chatModal.classList.remove('open'); }
+
+  $('cardChat').addEventListener('click', openChat);
+  $('aiBanner').addEventListener('click', openChat);
+  $('startChatBtn').addEventListener('click', (e)=>{ e.preventDefault(); openChat(); });
+  $('drawerChatLink').addEventListener('click', (e)=>{ e.preventDefault(); openChat(); });
+  $('chatClose').addEventListener('click', closeChat);
+
+  function addMsg(text, who){
+    const div = document.createElement('div');
+    div.className = 'msg ' + who;
+    div.textContent = text;
+    chatBody.appendChild(div);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  const botReplies = [
+    "Got it. Can you tell me the exact error code or message shown on the display?",
+    "That sounds like a paper feed issue. Try removing the tray, fanning the paper, and reloading it below the max-fill line.",
+    "For streaky or faded prints, the toner or ink cartridge may be low or unevenly seated — try reseating it first.",
+    "Thanks for the details. I'd recommend booking a technician visit if this keeps happening after a restart."
+  ];
+  let replyIdx = 0;
+
+  function sendMessage(){
+    const text = chatInput.value.trim();
+    if(!text) return;
+    addMsg(text, 'user');
+    chatInput.value = '';
+    setTimeout(()=>{
+      addMsg(botReplies[replyIdx % botReplies.length], 'bot');
+      replyIdx++;
+    }, 550);
+  }
+  $('chatSend').addEventListener('click', sendMessage);
+  chatInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') sendMessage(); });
+
+})();
+</script>
 </body>
 </html>
