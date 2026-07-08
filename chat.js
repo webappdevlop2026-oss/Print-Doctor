@@ -1,0 +1,63 @@
+// Vercel serverless function — keeps the Gemini API key on the server side.
+// Set GEMINI_API_KEY in Vercel -> Project Settings -> Environment Variables.
+// Get a free key (no credit card needed) at https://aistudio.google.com/apikey
+
+module.exports = async function handler(req, res) {
+  if (req.method !== "POST") {
+    res.status(405).json({ error: "Method Not Allowed" });
+    return;
+  }
+
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    res.status(500).json({ error: "GEMINI_API_KEY not configured on the server." });
+    return;
+  }
+
+  try {
+    // Vercel auto-parses JSON bodies into req.body when Content-Type is application/json.
+    // Fall back to manual parsing just in case it arrives as a raw string.
+    const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+    const { system, messages } = body;
+
+    // Convert Anthropic-style {role:'user'|'assistant', content:'...'} history
+    // into Gemini's {role:'user'|'model', parts:[{text}]} format.
+    const contents = messages.map((m) => ({
+      role: m.role === "assistant" ? "model" : "user",
+      parts: [{ text: m.content }]
+    }));
+
+    const model = "gemini-2.5-flash";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: system }] },
+        contents: contents,
+        generationConfig: { maxOutputTokens: 1000 }
+      })
+    });
+
+    const data = await response.json();
+
+    // Normalize into the same shape the frontend already expects:
+    // { content: [ { type: "text", text: "..." } ] }
+    let replyText = "";
+    if (data && data.candidates && data.candidates[0] && data.candidates[0].content) {
+      replyText = data.candidates[0].content.parts
+        .map((p) => p.text || "")
+        .join("\n");
+    }
+
+    if (!replyText && data.error) {
+      res.status(200).json({ content: [], error: data.error });
+      return;
+    }
+
+    res.status(200).json({ content: [{ type: "text", text: replyText }] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
