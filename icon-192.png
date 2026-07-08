@@ -36,7 +36,8 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: system }] },
         contents: contents,
-        generationConfig: { maxOutputTokens: 1000 }
+        tools: [{ google_search: {} }], // lets Gemini search Google before answering, so model-specific facts (error codes, part names) are checked instead of guessed
+        generationConfig: { maxOutputTokens: 1200 }
       })
     });
 
