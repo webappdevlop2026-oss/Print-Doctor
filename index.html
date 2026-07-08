@@ -286,38 +286,122 @@
   .footer-links a{color:var(--graphite); text-decoration:none; font-size:13.5px;}
   .footer-note{color:var(--graphite); font-size:12.5px; width:100%; padding-top:18px; border-top:1px dotted var(--line); margin-top:8px;}
 
+  /* ===== HAMBURGER (mobile nav trigger) ===== */
+  .hamburger{
+    display:none; align-items:center; justify-content:center;
+    width:40px; height:40px; border-radius:8px; border:1px solid var(--line);
+    background:var(--paper-dim); cursor:pointer; flex-shrink:0; padding:0;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .hamburger span{
+    display:block; width:18px; height:2px; background:var(--ink); border-radius:2px;
+    position:relative; transition:transform .2s ease, opacity .2s ease, background .2s ease;
+  }
+  .hamburger span::before,.hamburger span::after{
+    content:''; position:absolute; left:0; width:18px; height:2px; background:var(--ink); border-radius:2px;
+    transition:transform .2s ease, top .2s ease, opacity .2s ease;
+  }
+  .hamburger span::before{top:-6px;}
+  .hamburger span::after{top:6px;}
+  header.menu-open .hamburger span{background:transparent;}
+  header.menu-open .hamburger span::before{top:0; transform:rotate(45deg);}
+  header.menu-open .hamburger span::after{top:0; transform:rotate(-45deg);}
+
+  /* ===== MOBILE APP-STYLE BOTTOM BAR ===== */
+  .mobile-cta-bar{
+    display:none;
+    position:fixed; left:0; right:0; bottom:0; z-index:60;
+    background:rgba(250,247,240,0.94); backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+    box-shadow:0 -8px 24px -12px rgba(28,27,24,0.18);
+    transform:translateY(0); transition:transform .25s ease;
+  }
+  .mobile-cta-bar.hide{transform:translateY(110%);}
+  .mobile-cta-bar a{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--ink); color:var(--paper); text-decoration:none;
+    font-weight:700; font-size:14.5px; padding:13px 16px; border-radius:8px;
+    min-height:48px;
+  }
+  .mobile-cta-bar a:active{background:var(--magenta);}
+
   @media (max-width:860px){
-    .hero{grid-template-columns:1fr; padding-top:44px;}
-    h1{font-size:30px;}
+    .hero{grid-template-columns:1fr; padding-top:32px; gap:36px;}
+    h1{font-size:28px;}
     .steps, .grid-3{grid-template-columns:1fr;}
     .nav-links{display:none;}
     .screen{height:380px;}
-    .nav-wrap{flex-wrap:wrap;}
+    .nav-wrap{flex-wrap:nowrap; padding:14px 16px;}
+
+    .hamburger{display:inline-flex;}
+    .nav-right{gap:10px;}
+    .nav-right .nav-cta{display:none;}
+
+    /* nav-links becomes a dropdown sheet, toggled via header.menu-open */
+    header{position:sticky;}
+    header .nav-links{
+      display:none;
+    }
+    header.menu-open .nav-links{
+      display:flex; flex-direction:column; gap:2px;
+      position:absolute; top:100%; left:0; right:0;
+      background:var(--paper); border-bottom:1px solid var(--line);
+      padding:10px 16px calc(14px + env(safe-area-inset-bottom));
+      box-shadow:0 16px 30px -18px rgba(28,27,24,0.25);
+    }
+    header.menu-open .nav-links a{
+      padding:13px 6px; font-size:15px; font-weight:600; color:var(--ink);
+      border-bottom:1px dotted var(--line);
+    }
+    header.menu-open .nav-links a:last-child{border-bottom:none;}
+
+    /* un-rotate the hero ticket card and center it on mobile */
+    .ticket{transform:none; max-width:420px; margin:0 auto;}
+
+    /* stacked, full-width, thumb-friendly CTAs */
+    .hero-ctas{flex-direction:column; gap:10px;}
+    .btn-primary, .btn-ghost{
+      width:100%; justify-content:center; min-height:50px; font-size:15px;
+    }
+
+    .trust-row{gap:14px 18px;}
+
+    /* room for the fixed bottom CTA bar */
+    body{padding-bottom:74px;}
+    .mobile-cta-bar{display:block;}
   }
 
   /* ===== MOBILE CHAT FIX ===== */
   @media (max-width:640px){
-    section{padding:44px 16px;}
-    #ai-help{padding-top:12px;}
-    h2{font-size:24px;}
-    .section-lead{margin-bottom:28px;}
+    section{padding:40px 16px;}
+    #ai-help{padding-top:8px; scroll-margin-top:64px;}
+    #how, #problems{scroll-margin-top:64px;}
+    h2{font-size:22px;}
+    .section-lead{margin-bottom:24px; font-size:14px;}
 
-    .panel{padding:12px; border-radius:12px; position:relative;}
-    .panel-top{padding:2px 4px 12px; gap:8px;}
+    h1{font-size:25px; line-height:1.24;}
+    .hero p.lead{font-size:15px; max-width:none;}
+    .hero{padding-top:24px; padding-bottom:36px; gap:28px;}
+
+    .panel{padding:10px; border-radius:14px; position:relative;}
+    .panel-top{padding:4px 4px 12px; gap:8px;}
     .panel-title{font-size:11.5px; gap:8px;}
-    .chat-lang-switch button{padding:4px 8px; font-size:10.5px;}
+    .panel-title span:last-child{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .chat-lang-switch button{padding:6px 9px; font-size:10.5px;}
     .panel-lights{gap:4px;}
     .panel-lights i{width:6px;height:6px;}
 
     /* চ্যাট মেসেজ এলাকা — স্ক্রিনের উচ্চতা অনুযায়ী মানানসই, নিজে থেকেই স্ক্রল হবে */
     .screen{
-      height:min(52vh, 420px);
-      padding:12px;
-      gap:10px;
-      border-radius:6px;
+      height:min(56dvh, 460px);
+      height:min(56vh, 460px);
+      padding:14px 12px;
+      gap:12px;
+      border-radius:8px;
     }
-    .msg{max-width:90%; font-size:13.8px; padding:10px 12px;}
-    .msg.ai{font-size:12.6px;}
+    .msg{max-width:92%; font-size:14px; padding:11px 13px;}
+    .msg.ai{font-size:13px;}
 
     /* কুইক-ট্যাগ পাশাপাশি স্ক্রল হবে, লাইন ভেঙে জায়গা নষ্ট করবে না */
     .quick-tags{
@@ -326,23 +410,33 @@
       scrollbar-width:none;
     }
     .quick-tags::-webkit-scrollbar{display:none;}
-    .qtag{flex:0 0 auto; padding:7px 12px; font-size:12px;}
+    .qtag{flex:0 0 auto; padding:9px 14px; font-size:12.5px; min-height:38px; display:flex; align-items:center;}
 
     /* ইনপুট বক্স সবসময় দৃশ্যমান জায়গায় স্থির থাকবে, মেসেজ যতই থাকুক না কেন */
     .input-row{
       position:sticky; bottom:0; z-index:5;
       margin-top:10px; padding:7px; gap:8px;
     }
-    .input-row textarea{font-size:14px; padding:8px 10px; min-height:22px;}
-    .send-btn{padding:0 14px; font-size:13px;}
+    .input-row textarea{font-size:16px; padding:10px 10px; min-height:24px;}
+    .send-btn{padding:0 16px; font-size:13.5px; min-height:44px;}
 
     .disclaimer{font-size:11.5px; padding:0 6px;}
+
+    /* full-width, thumb-friendly problem-card buttons */
+    .problem-card{padding:20px;}
+    .problem-card button{
+      display:inline-flex; align-items:center; min-height:40px; margin-top:2px;
+    }
+
+    .footer-wrap{padding:32px 16px; text-align:center; justify-content:center;}
+    .footer-links{gap:16px; flex-wrap:wrap; justify-content:center;}
   }
 
   @media (max-width:380px){
-    .screen{height:min(48vh, 380px);}
+    .screen{height:min(50dvh, 400px); height:min(50vh, 400px);}
     .msg{font-size:13px;}
-    .qtag{font-size:11.5px; padding:6px 10px;}
+    .qtag{font-size:11.5px; padding:8px 12px;}
+    h1{font-size:22px;}
   }
 </style>
 </head>
@@ -363,9 +457,14 @@
         <button class="lang-btn" data-lang="en">EN</button>
       </div>
       <a href="#ai-help" class="nav-cta" data-i18n="nav_cta">সমস্যা লিখুন</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false"><span></span></button>
     </div>
   </div>
 </header>
+
+<a href="#ai-help" class="mobile-cta-bar" id="mobileCtaBar">
+  <span data-i18n="nav_cta">সমস্যা লিখুন</span>
+</a>
 
 <div id="top" class="hero">
   <div>
@@ -898,6 +997,43 @@ inputEl.addEventListener('input', () => {
   inputEl.style.height = 'auto';
   inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
 });
+
+/* ===================== MOBILE NAV (hamburger + bottom CTA) ===================== */
+const headerEl = document.querySelector('header');
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+
+function closeMenu(){
+  headerEl.classList.remove('menu-open');
+  hamburgerBtn.setAttribute('aria-expanded', 'false');
+}
+function toggleMenu(){
+  const open = headerEl.classList.toggle('menu-open');
+  hamburgerBtn.setAttribute('aria-expanded', String(open));
+}
+hamburgerBtn.addEventListener('click', toggleMenu);
+
+// close the dropdown once a nav link is tapped
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click', closeMenu);
+});
+// close if the person taps outside the open menu
+document.addEventListener('click', (e)=>{
+  if(headerEl.classList.contains('menu-open') && !headerEl.contains(e.target)){
+    closeMenu();
+  }
+});
+
+// fixed bottom "সমস্যা লিখুন" bar: hide once the chat panel itself is visible
+const mobileCtaBar = document.getElementById('mobileCtaBar');
+const aiHelpSection = document.getElementById('ai-help');
+if(mobileCtaBar && aiHelpSection && 'IntersectionObserver' in window){
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      mobileCtaBar.classList.toggle('hide', entry.isIntersecting);
+    });
+  }, { rootMargin: '0px 0px -40% 0px', threshold: 0 });
+  io.observe(aiHelpSection);
+}
 
 /* init */
 applyLanguage('bn');
