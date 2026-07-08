@@ -1,0 +1,33 @@
+{
+  "name": "প্রিন্ট ডাক্তার — ফটোকপি ও প্রিন্টার সমস্যার AI সমাধান",
+  "short_name": "প্রিন্ট ডাক্তার",
+  "description": "ফটোকপি বা প্রিন্টারের সমস্যা লিখুন, AI সার্ভিস ইঞ্জিনিয়ার থেকে সাথে সাথে সমাধান পান।",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FAF7F0",
+  "theme_color": "#FAF7F0",
+  "lang": "bn",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
