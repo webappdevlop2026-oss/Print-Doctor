@@ -36,7 +36,8 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: system }] },
         contents: contents,
-        generationConfig: { maxOutputTokens: 1000 }
+        tools: [{ google_search: {} }], // lets Gemini search Google before answering, so model-specific facts (error codes, part names) are checked instead of guessed
+        generationConfig: { maxOutputTokens: 1200 }
       })
     });
 
@@ -51,8 +52,20 @@ module.exports = async function handler(req, res) {
         .join("\n");
     }
 
-    if (!replyText && data.error) {
-      res.status(200).json({ content: [], error: data.error });
+    if (!replyText) {
+      const apiError = data.error || null;
+      const isRateLimit =
+        response.status === 429 ||
+        (apiError && (apiError.code === 429 || apiError.status === "RESOURCE_EXHAUSTED"));
+
+      const debugInfo = {
+        type: isRateLimit ? "rate_limit" : "other",
+        httpStatus: response.status,
+        apiError,
+        finishReason: data.candidates && data.candidates[0] ? data.candidates[0].finishReason : null,
+        promptFeedback: data.promptFeedback || null
+      };
+      res.status(200).json({ content: [], error: debugInfo });
       return;
     }
 
